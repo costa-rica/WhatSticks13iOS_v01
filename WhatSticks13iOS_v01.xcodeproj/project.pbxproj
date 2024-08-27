@@ -10,9 +10,44 @@
 		01D6FF902C7DCF6500087708 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */; };
 		01D6FF922C7DCF6500087708 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF912C7DCF6500087708 /* SceneDelegate.swift */; };
 		01D6FF942C7DCF6500087708 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF932C7DCF6500087708 /* ViewController.swift */; };
-		01D6FF972C7DCF6500087708 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FF962C7DCF6500087708 /* Base */; };
 		01D6FF992C7DCF6600087708 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FF982C7DCF6600087708 /* Assets.xcassets */; };
 		01D6FF9C2C7DCF6600087708 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FF9B2C7DCF6600087708 /* Base */; };
+		01D6FFA82C7DD04D00087708 /* data_source_list_for_user_guest.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FFA62C7DD04D00087708 /* data_source_list_for_user_guest.json */; };
+		01D6FFA92C7DD04D00087708 /* data_table_objects_array_guest.json in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FFA72C7DD04D00087708 /* data_table_objects_array_guest.json */; };
+		01D6FFAB2C7DD05700087708 /* LaunchVideo_v06.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FFAA2C7DD05700087708 /* LaunchVideo_v06.mp4 */; };
+		01D6FFD32C7DD06800087708 /* DashboardHealthDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFAC2C7DD06700087708 /* DashboardHealthDataObject.swift */; };
+		01D6FFD42C7DD06800087708 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFAD2C7DD06700087708 /* User.swift */; };
+		01D6FFD52C7DD06800087708 /* AppleHealthDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFAF2C7DD06700087708 /* AppleHealthDataFetcher.swift */; };
+		01D6FFD62C7DD06800087708 /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB02C7DD06700087708 /* LocationFetcher.swift */; };
+		01D6FFD72C7DD06800087708 /* MiscUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB12C7DD06700087708 /* MiscUtils.swift */; };
+		01D6FFD82C7DD06800087708 /* DashboardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB32C7DD06800087708 /* DashboardTableCell.swift */; };
+		01D6FFD92C7DD06800087708 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB42C7DD06800087708 /* DashboardVC.swift */; };
+		01D6FFDA2C7DD06800087708 /* DashboardVcComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB52C7DD06800087708 /* DashboardVcComponents.swift */; };
+		01D6FFDB2C7DD06800087708 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB72C7DD06800087708 /* HomeVC.swift */; };
+		01D6FFDC2C7DD06800087708 /* HomeVcHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB82C7DD06800087708 /* HomeVcHeaderView.swift */; };
+		01D6FFDD2C7DD06800087708 /* LaunchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFB92C7DD06800087708 /* LaunchVideoVC.swift */; };
+		01D6FFDE2C7DD06800087708 /* SelectAppModeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFBA2C7DD06800087708 /* SelectAppModeVC.swift */; };
+		01D6FFDF2C7DD06800087708 /* ManageDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFBC2C7DD06800087708 /* ManageDataVC.swift */; };
+		01D6FFE02C7DD06800087708 /* ManageDataVcHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFBD2C7DD06800087708 /* ManageDataVcHeader.swift */; };
+		01D6FFE12C7DD06800087708 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFBF2C7DD06800087708 /* RegisterVC.swift */; };
+		01D6FFE22C7DD06800087708 /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC02C7DD06800087708 /* UserVC.swift */; };
+		01D6FFE32C7DD06800087708 /* UserVcComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC12C7DD06800087708 /* UserVcComponents.swift */; };
+		01D6FFE42C7DD06800087708 /* UserVcDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC22C7DD06800087708 /* UserVcDelete.swift */; };
+		01D6FFE52C7DD06800087708 /* UserVcLocationDayWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC32C7DD06800087708 /* UserVcLocationDayWeather.swift */; };
+		01D6FFE62C7DD06800087708 /* UserVcOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC42C7DD06800087708 /* UserVcOffline.swift */; };
+		01D6FFE72C7DD06800087708 /* UserVcRegisterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC52C7DD06800087708 /* UserVcRegisterButton.swift */; };
+		01D6FFE82C7DD06800087708 /* UserVcUserStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC62C7DD06800087708 /* UserVcUserStatusView.swift */; };
+		01D6FFE92C7DD06800087708 /* AreYouSureModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC82C7DD06800087708 /* AreYouSureModalVC.swift */; };
+		01D6FFEA2C7DD06800087708 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFC92C7DD06800087708 /* InformationView.swift */; };
+		01D6FFEB2C7DD06800087708 /* RootNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFCA2C7DD06800087708 /* RootNavigator.swift */; };
+		01D6FFEC2C7DD06800087708 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFCB2C7DD06800087708 /* TabController.swift */; };
+		01D6FFED2C7DD06800087708 /* TemplateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFCC2C7DD06800087708 /* TemplateVC.swift */; };
+		01D6FFEE2C7DD06800087708 /* HealthDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFCE2C7DD06800087708 /* HealthDataStore.swift */; };
+		01D6FFEF2C7DD06800087708 /* RequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFCF2C7DD06800087708 /* RequestStore.swift */; };
+		01D6FFF02C7DD06800087708 /* UrlStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFD02C7DD06800087708 /* UrlStore.swift */; };
+		01D6FFF12C7DD06800087708 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFD12C7DD06800087708 /* UserStore.swift */; };
+		01D6FFF42C7DD07100087708 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFF22C7DD07100087708 /* Config.swift */; };
+		01D6FFF52C7DD07100087708 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FFF32C7DD07100087708 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +55,46 @@
 		01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01D6FF912C7DCF6500087708 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		01D6FF932C7DCF6500087708 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		01D6FF962C7DCF6500087708 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01D6FF982C7DCF6600087708 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01D6FF9B2C7DCF6600087708 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01D6FF9D2C7DCF6600087708 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D6FFA62C7DD04D00087708 /* data_source_list_for_user_guest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data_source_list_for_user_guest.json; sourceTree = "<group>"; };
+		01D6FFA72C7DD04D00087708 /* data_table_objects_array_guest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data_table_objects_array_guest.json; sourceTree = "<group>"; };
+		01D6FFAA2C7DD05700087708 /* LaunchVideo_v06.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LaunchVideo_v06.mp4; sourceTree = "<group>"; };
+		01D6FFAC2C7DD06700087708 /* DashboardHealthDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHealthDataObject.swift; sourceTree = "<group>"; };
+		01D6FFAD2C7DD06700087708 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		01D6FFAF2C7DD06700087708 /* AppleHealthDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleHealthDataFetcher.swift; sourceTree = "<group>"; };
+		01D6FFB02C7DD06700087708 /* LocationFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
+		01D6FFB12C7DD06700087708 /* MiscUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscUtils.swift; sourceTree = "<group>"; };
+		01D6FFB32C7DD06800087708 /* DashboardTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTableCell.swift; sourceTree = "<group>"; };
+		01D6FFB42C7DD06800087708 /* DashboardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
+		01D6FFB52C7DD06800087708 /* DashboardVcComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardVcComponents.swift; sourceTree = "<group>"; };
+		01D6FFB72C7DD06800087708 /* HomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		01D6FFB82C7DD06800087708 /* HomeVcHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeVcHeaderView.swift; sourceTree = "<group>"; };
+		01D6FFB92C7DD06800087708 /* LaunchVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchVideoVC.swift; sourceTree = "<group>"; };
+		01D6FFBA2C7DD06800087708 /* SelectAppModeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAppModeVC.swift; sourceTree = "<group>"; };
+		01D6FFBC2C7DD06800087708 /* ManageDataVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageDataVC.swift; sourceTree = "<group>"; };
+		01D6FFBD2C7DD06800087708 /* ManageDataVcHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageDataVcHeader.swift; sourceTree = "<group>"; };
+		01D6FFBF2C7DD06800087708 /* RegisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		01D6FFC02C7DD06800087708 /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
+		01D6FFC12C7DD06800087708 /* UserVcComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcComponents.swift; sourceTree = "<group>"; };
+		01D6FFC22C7DD06800087708 /* UserVcDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcDelete.swift; sourceTree = "<group>"; };
+		01D6FFC32C7DD06800087708 /* UserVcLocationDayWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcLocationDayWeather.swift; sourceTree = "<group>"; };
+		01D6FFC42C7DD06800087708 /* UserVcOffline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcOffline.swift; sourceTree = "<group>"; };
+		01D6FFC52C7DD06800087708 /* UserVcRegisterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcRegisterButton.swift; sourceTree = "<group>"; };
+		01D6FFC62C7DD06800087708 /* UserVcUserStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVcUserStatusView.swift; sourceTree = "<group>"; };
+		01D6FFC82C7DD06800087708 /* AreYouSureModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AreYouSureModalVC.swift; sourceTree = "<group>"; };
+		01D6FFC92C7DD06800087708 /* InformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		01D6FFCA2C7DD06800087708 /* RootNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigator.swift; sourceTree = "<group>"; };
+		01D6FFCB2C7DD06800087708 /* TabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		01D6FFCC2C7DD06800087708 /* TemplateVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemplateVC.swift; sourceTree = "<group>"; };
+		01D6FFCE2C7DD06800087708 /* HealthDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthDataStore.swift; sourceTree = "<group>"; };
+		01D6FFCF2C7DD06800087708 /* RequestStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestStore.swift; sourceTree = "<group>"; };
+		01D6FFD02C7DD06800087708 /* UrlStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlStore.swift; sourceTree = "<group>"; };
+		01D6FFD12C7DD06800087708 /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		01D6FFF22C7DD07100087708 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		01D6FFF32C7DD07100087708 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		01D6FFF62C7DD16100087708 /* WhatSticks13iOS_v01.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhatSticks13iOS_v01.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +111,8 @@
 		01D6FF832C7DCF6500087708 = {
 			isa = PBXGroup;
 			children = (
+				01D6FFF22C7DD07100087708 /* Config.swift */,
+				01D6FFF32C7DD07100087708 /* README.md */,
 				01D6FF8E2C7DCF6500087708 /* WhatSticks13iOS_v01 */,
 				01D6FF8D2C7DCF6500087708 /* Products */,
 			);
@@ -56,15 +129,137 @@
 		01D6FF8E2C7DCF6500087708 /* WhatSticks13iOS_v01 */ = {
 			isa = PBXGroup;
 			children = (
-				01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */,
-				01D6FF912C7DCF6500087708 /* SceneDelegate.swift */,
+				01D6FFF62C7DD16100087708 /* WhatSticks13iOS_v01.entitlements */,
 				01D6FF932C7DCF6500087708 /* ViewController.swift */,
-				01D6FF952C7DCF6500087708 /* Main.storyboard */,
-				01D6FF982C7DCF6600087708 /* Assets.xcassets */,
-				01D6FF9A2C7DCF6600087708 /* LaunchScreen.storyboard */,
+				01D6FFAE2C7DD06700087708 /* Models */,
+				01D6FFD22C7DD06800087708 /* Stores */,
+				01D6FFB22C7DD06700087708 /* Utilities */,
+				01D6FFCD2C7DD06800087708 /* Views */,
+				01D6FFA52C7DD02D00087708 /* GuestFiles */,
+				01D6FFA42C7DD01F00087708 /* Media */,
+				01D6FFA32C7DCFCC00087708 /* Supporting */,
 				01D6FF9D2C7DCF6600087708 /* Info.plist */,
 			);
 			path = WhatSticks13iOS_v01;
+			sourceTree = "<group>";
+		};
+		01D6FFA32C7DCFCC00087708 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */,
+				01D6FF912C7DCF6500087708 /* SceneDelegate.swift */,
+				01D6FF982C7DCF6600087708 /* Assets.xcassets */,
+				01D6FF9A2C7DCF6600087708 /* LaunchScreen.storyboard */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		01D6FFA42C7DD01F00087708 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFAA2C7DD05700087708 /* LaunchVideo_v06.mp4 */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		01D6FFA52C7DD02D00087708 /* GuestFiles */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFA62C7DD04D00087708 /* data_source_list_for_user_guest.json */,
+				01D6FFA72C7DD04D00087708 /* data_table_objects_array_guest.json */,
+			);
+			path = GuestFiles;
+			sourceTree = "<group>";
+		};
+		01D6FFAE2C7DD06700087708 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFAC2C7DD06700087708 /* DashboardHealthDataObject.swift */,
+				01D6FFAD2C7DD06700087708 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		01D6FFB22C7DD06700087708 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFAF2C7DD06700087708 /* AppleHealthDataFetcher.swift */,
+				01D6FFB02C7DD06700087708 /* LocationFetcher.swift */,
+				01D6FFB12C7DD06700087708 /* MiscUtils.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		01D6FFB62C7DD06800087708 /* DashboardVC */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFB32C7DD06800087708 /* DashboardTableCell.swift */,
+				01D6FFB42C7DD06800087708 /* DashboardVC.swift */,
+				01D6FFB52C7DD06800087708 /* DashboardVcComponents.swift */,
+			);
+			path = DashboardVC;
+			sourceTree = "<group>";
+		};
+		01D6FFBB2C7DD06800087708 /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFB72C7DD06800087708 /* HomeVC.swift */,
+				01D6FFB82C7DD06800087708 /* HomeVcHeaderView.swift */,
+				01D6FFB92C7DD06800087708 /* LaunchVideoVC.swift */,
+				01D6FFBA2C7DD06800087708 /* SelectAppModeVC.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		01D6FFBE2C7DD06800087708 /* ManageDataVC */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFBC2C7DD06800087708 /* ManageDataVC.swift */,
+				01D6FFBD2C7DD06800087708 /* ManageDataVcHeader.swift */,
+			);
+			path = ManageDataVC;
+			sourceTree = "<group>";
+		};
+		01D6FFC72C7DD06800087708 /* UserVC */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFBF2C7DD06800087708 /* RegisterVC.swift */,
+				01D6FFC02C7DD06800087708 /* UserVC.swift */,
+				01D6FFC12C7DD06800087708 /* UserVcComponents.swift */,
+				01D6FFC22C7DD06800087708 /* UserVcDelete.swift */,
+				01D6FFC32C7DD06800087708 /* UserVcLocationDayWeather.swift */,
+				01D6FFC42C7DD06800087708 /* UserVcOffline.swift */,
+				01D6FFC52C7DD06800087708 /* UserVcRegisterButton.swift */,
+				01D6FFC62C7DD06800087708 /* UserVcUserStatusView.swift */,
+			);
+			path = UserVC;
+			sourceTree = "<group>";
+		};
+		01D6FFCD2C7DD06800087708 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFB62C7DD06800087708 /* DashboardVC */,
+				01D6FFBB2C7DD06800087708 /* HomeVC */,
+				01D6FFBE2C7DD06800087708 /* ManageDataVC */,
+				01D6FFC72C7DD06800087708 /* UserVC */,
+				01D6FFC82C7DD06800087708 /* AreYouSureModalVC.swift */,
+				01D6FFC92C7DD06800087708 /* InformationView.swift */,
+				01D6FFCA2C7DD06800087708 /* RootNavigator.swift */,
+				01D6FFCB2C7DD06800087708 /* TabController.swift */,
+				01D6FFCC2C7DD06800087708 /* TemplateVC.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		01D6FFD22C7DD06800087708 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				01D6FFCE2C7DD06800087708 /* HealthDataStore.swift */,
+				01D6FFCF2C7DD06800087708 /* RequestStore.swift */,
+				01D6FFD02C7DD06800087708 /* UrlStore.swift */,
+				01D6FFD12C7DD06800087708 /* UserStore.swift */,
+			);
+			path = Stores;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +320,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D6FFF52C7DD07100087708 /* README.md in Resources */,
 				01D6FF992C7DCF6600087708 /* Assets.xcassets in Resources */,
 				01D6FF9C2C7DCF6600087708 /* Base in Resources */,
-				01D6FF972C7DCF6500087708 /* Base in Resources */,
+				01D6FFA92C7DD04D00087708 /* data_table_objects_array_guest.json in Resources */,
+				01D6FFA82C7DD04D00087708 /* data_source_list_for_user_guest.json in Resources */,
+				01D6FFAB2C7DD05700087708 /* LaunchVideo_v06.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,22 +337,46 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D6FF942C7DCF6500087708 /* ViewController.swift in Sources */,
+				01D6FFDD2C7DD06800087708 /* LaunchVideoVC.swift in Sources */,
+				01D6FFF02C7DD06800087708 /* UrlStore.swift in Sources */,
+				01D6FFE22C7DD06800087708 /* UserVC.swift in Sources */,
+				01D6FFEF2C7DD06800087708 /* RequestStore.swift in Sources */,
+				01D6FFE82C7DD06800087708 /* UserVcUserStatusView.swift in Sources */,
+				01D6FFD92C7DD06800087708 /* DashboardVC.swift in Sources */,
+				01D6FFD32C7DD06800087708 /* DashboardHealthDataObject.swift in Sources */,
+				01D6FFDA2C7DD06800087708 /* DashboardVcComponents.swift in Sources */,
 				01D6FF902C7DCF6500087708 /* AppDelegate.swift in Sources */,
+				01D6FFE92C7DD06800087708 /* AreYouSureModalVC.swift in Sources */,
+				01D6FFD62C7DD06800087708 /* LocationFetcher.swift in Sources */,
+				01D6FFEC2C7DD06800087708 /* TabController.swift in Sources */,
+				01D6FFE02C7DD06800087708 /* ManageDataVcHeader.swift in Sources */,
+				01D6FFD42C7DD06800087708 /* User.swift in Sources */,
+				01D6FFEE2C7DD06800087708 /* HealthDataStore.swift in Sources */,
+				01D6FFE52C7DD06800087708 /* UserVcLocationDayWeather.swift in Sources */,
+				01D6FFF42C7DD07100087708 /* Config.swift in Sources */,
+				01D6FFD52C7DD06800087708 /* AppleHealthDataFetcher.swift in Sources */,
+				01D6FFDF2C7DD06800087708 /* ManageDataVC.swift in Sources */,
 				01D6FF922C7DCF6500087708 /* SceneDelegate.swift in Sources */,
+				01D6FFE72C7DD06800087708 /* UserVcRegisterButton.swift in Sources */,
+				01D6FFEB2C7DD06800087708 /* RootNavigator.swift in Sources */,
+				01D6FFDB2C7DD06800087708 /* HomeVC.swift in Sources */,
+				01D6FFE62C7DD06800087708 /* UserVcOffline.swift in Sources */,
+				01D6FFDE2C7DD06800087708 /* SelectAppModeVC.swift in Sources */,
+				01D6FFED2C7DD06800087708 /* TemplateVC.swift in Sources */,
+				01D6FFDC2C7DD06800087708 /* HomeVcHeaderView.swift in Sources */,
+				01D6FFE12C7DD06800087708 /* RegisterVC.swift in Sources */,
+				01D6FFD72C7DD06800087708 /* MiscUtils.swift in Sources */,
+				01D6FFE42C7DD06800087708 /* UserVcDelete.swift in Sources */,
+				01D6FFF12C7DD06800087708 /* UserStore.swift in Sources */,
+				01D6FFEA2C7DD06800087708 /* InformationView.swift in Sources */,
+				01D6FFD82C7DD06800087708 /* DashboardTableCell.swift in Sources */,
+				01D6FFE32C7DD06800087708 /* UserVcComponents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		01D6FF952C7DCF6500087708 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				01D6FF962C7DCF6500087708 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		01D6FF9A2C7DCF6600087708 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -290,26 +512,34 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WhatSticks13iOS_v01/WhatSticks13iOS_v01.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GL5QL25H5M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatSticks13iOS_v01/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "What Sticks";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Allow What Sticks to collect Health Data for analysis.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Allow What Sticks to collect Health Data for analysis.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Turning on location services allows us to add weather related correlations to your dashboards.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows us to add weather related correlations to your dashboards.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "info.nick-rodriguez.WhatSticks13iOS-v01";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.what-sticks.WhatSticks13iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -318,26 +548,34 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WhatSticks13iOS_v01/WhatSticks13iOS_v01.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GL5QL25H5M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WhatSticks13iOS_v01/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "What Sticks";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Allow What Sticks to collect Health Data for analysis.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Allow What Sticks to collect Health Data for analysis.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Turning on location services allows us to add weather related correlations to your dashboards.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Turning on location services allows us to add weather related correlations to your dashboards.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "info.nick-rodriguez.WhatSticks13iOS-v01";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.what-sticks.WhatSticks13iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

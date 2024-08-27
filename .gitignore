@@ -1,0 +1,27 @@
+# Nick ignores
+Config.swift
+Podfile.lock
+encryption_export_compliance.txt
+
+# ChatGPT suggested ignores
+# macOS system files
+.DS_Store
+
+# Xcode files
+*.xcuserstate
+project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/*.mode1v3
+*.xcodeproj/*.mode2v3
+*.xcodeproj/*.pbxuser
+*.xcodeproj/xcshareddata/xcschemes/*
+*.xcodeproj/xcshareddata/xcschemes/*/*.xcscheme
+
+# Derived data
+DerivedData/
+
+# CocoaPods
+Pods/
+
+# Ignore Xcode user-specific settings
+xcuserdata/
