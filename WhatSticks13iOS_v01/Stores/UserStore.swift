@@ -396,7 +396,7 @@ extension UserStore{
     }
     
     func callRegisterGenericUser(completion: @escaping (Result<[String:Any], Error>) -> Void) {
-        
+        print("- in callRegisterGenericUser")
         guard let unwp_email = user.username else {
             completion(.failure(UserStoreError.userHasNoUsername))
             return
@@ -477,8 +477,8 @@ extension UserStore{
             }
             do {
                 if let jsonResult = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
-//                    print("--- This should include a ArryDataSourceObjects ----")
-//                    print("JSON dictionary: \(jsonResult)")
+                    print("--- This should include a ArryDataSourceObjects ----")
+                    print("JSON dictionary: \(jsonResult)")
                     self.assignUser(dictUser: jsonResult)
                     self.assignArryDataSourceObjects(jsonResponse: jsonResult)
                     self.assignArryDashboardTableObjects(jsonResponse: jsonResult)

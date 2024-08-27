@@ -18,18 +18,9 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        URLStore.shared.apiBase = .prod
-        URLStore.shared.apiBase = .dev
+        URLStore.shared.apiBase = .prod
+//        URLStore.shared.apiBase = .dev
 //        URLStore.shared.apiBase = .local
-        
-//        let userStore = UserStore.shared
-//        let locationFetcher = LocationFetcher.shared
-        LocationFetcher.shared.locationManager.requestAlwaysAuthorization()
-//        let parentRequestStore = RequestStore.shared
-//        UserStore.shared.requestStore = RequestStore.shared
-        
-//        let healthDataStore = HealthDataStore.shared
-//        healthDataStore.requestStore = parentRequestStore
         
         self.setup_TopSafeBar()
         setupHomeVcHeader()
@@ -37,11 +28,10 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
 
     }
     override func viewIsAppearing(_ animated: Bool) {
-        print("- HomeVc viewIsAppearing")
+//        print("- HomeVc viewIsAppearing")
         if !didPresentAppModeOption{
             // deactivate Tab Bar items while present
             tabBarController?.tabBar.isUserInteractionEnabled = false
-            //            let selectAppModeVc = SelectAppModeVC()
             selectAppModeVc.delegate = self
             selectAppModeVc.modalPresentationStyle = .overCurrentContext
             selectAppModeVc.modalTransitionStyle = .crossDissolve
@@ -82,6 +72,7 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
+        LocationFetcher.shared.locationManager.requestAlwaysAuthorization()
         self.showSpinner()
         tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
         self.setupNonNormalMode()
@@ -96,6 +87,7 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
+        LocationFetcher.shared.locationManager.requestAlwaysAuthorization()
         self.showSpinner()
         tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
         self.templateAlert(alertTitle: "⚠️", alertMessage: "Remember: development setting has no restrictions on collecting/sending locations") {

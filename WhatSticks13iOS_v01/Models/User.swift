@@ -35,6 +35,15 @@ class User: Codable {
     }
     var last_location_date: String?
     var notifications:Bool?
+    
+//    init(){
+////        if let ud_location_permission_device = UserDefaults.standard.data(forKey: "location_permission_device") as Bool? {
+//        if let ud_location_permission_device = UserDefaults.standard.value(forKey: "location_permission_device") as! Bool?{
+//            location_permission_device = ud_location_permission_device
+//        } else {
+//            location_permission_device = false
+//        }
+//    }
 }
 
 

@@ -43,7 +43,7 @@ class DashboardHeader: UIView {
 
             let small_image = unwrapped_image.scaleImage(toSize: CGSize(width: 10, height: 10))
             btnDashboardTitleInfo.setImage(small_image, for: .normal)
-            print("btnDashboardTitleInfo image: calendar.badge.exclamationmark")
+//            print("btnDashboardTitleInfo image: calendar.badge.exclamationmark")
         } else {
             btnDashboardTitleInfo.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
 //            print("btnDashboardTitleInfo image: calendar.badge.exclamationmark")

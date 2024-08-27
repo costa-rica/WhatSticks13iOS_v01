@@ -133,7 +133,7 @@ class TemplateVC: UIViewController {
     
     
     func showSpinner() {
-        print("- TemplateVC showSpinnner - ")
+//        print("- TemplateVC showSpinnner - ")
         spinnerView = UIView()
         spinnerView!.translatesAutoresizingMaskIntoConstraints = false
         spinnerView!.backgroundColor = UIColor(white: 0, alpha: 0.5)

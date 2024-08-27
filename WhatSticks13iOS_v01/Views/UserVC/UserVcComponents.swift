@@ -376,7 +376,7 @@ extension UserStatusDevelopmentView {
         let token = userStore.user.token ?? "nil"
         let adminPermission = userStore.user.admin_permission ?? false
         let locationPermissionDevice = userStore.user.location_permission_device
-        let locationPermissionWS = userStore.user.location_permission_ws ?? false
+        let locationPermissionWS = userStore.user.location_permission_ws
 
         let concatenatedString = """
         ---- UserStore.user ----

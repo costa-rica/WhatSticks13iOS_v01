@@ -8,7 +8,7 @@
 import UIKit
 
 class ManageDataVC: TemplateVC {
-    var userStore: UserStore!
+//    var userStore: UserStore!
 //    var appleHealthDataFetcher:AppleHealthDataFetcher!
 //    var healthDataStore: HealthDataStore!
     var vwManageDataVcHeader = ManageDataVcHeader()
@@ -47,8 +47,11 @@ class ManageDataVC: TemplateVC {
     var strStatusMessage=String()
     
     override func viewDidLoad() {
-        userStore = UserStore.shared
-        AppleHealthDataFetcher.shared.authorizeHealthKit()
+//        userStore = UserStore.shared
+        if !UserStore.shared.isGuestMode{
+            print("- prompting for authorizeHealthKit() ")
+            AppleHealthDataFetcher.shared.authorizeHealthKit()
+        }
         setup_TopSafeBar()
         view.backgroundColor = UIColor(named: "ColorAppBackground")
         setupNonNormalMode()
@@ -268,7 +271,7 @@ extension ManageDataVC{
         print("- in sendAppleWorkouts")
         let dateStringTimeStamp = timeStampsForFileNames()
         // dateStringTimeStamp --> important for file name used by WSAPI/WSAS
-        guard let user_id = userStore.user.id else {
+        guard let user_id = UserStore.shared.user.id else {
             self.templateAlert(alertMessage: "No user id. check ManageAppleHealthVC sendAppleHealthData.")
             return}
         let qty_cat_and_workouts_count = arrySleepDict.count + arryStepsDict.count + arryHeartRateDict.count + arryExerciseTimeDict.count + arryWorkoutDict.count
@@ -294,7 +297,7 @@ extension ManageDataVC{
     }
     func sendAppleHealthData(userMessage:String, dateStringTimeStamp:String){
         print("- in sendAppleHealthData")
-        guard let user_id = userStore.user.id else {
+        guard let user_id = UserStore.shared.user.id else {
             self.templateAlert(alertMessage: "No user id. check ManageAppleHealthVC sendAppleHealthData.")
             return}
 //        let qty_cat_data_count = arrySleepDict.count + arryStepsDict.count + arryHeartRateDict.count + arryExerciseTimeDict.count

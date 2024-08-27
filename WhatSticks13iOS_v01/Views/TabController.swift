@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("- in TabController -")
+//        print("- in TabController -")
         self.setupTabs()
         self.tabBar.backgroundColor = UIColor(named: "ColorTableTabModalBack")
         self.tabBar.tintColor = UIColor(named: "ColorTabBarSelected")
@@ -52,7 +52,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             print("- Item is not a UINavigationController")
             return
         }
-        if let home_vc = nav_vc.children[0] as? HomeVC {
+        if let _ = nav_vc.children[0] as? HomeVC {
             
         }
         
