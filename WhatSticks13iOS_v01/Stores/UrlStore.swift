@@ -15,7 +15,7 @@ enum APIBase:String, CaseIterable {
         switch self{
         case .local: return "http://127.0.0.1:5001/"
         case .dev: return "https://dev.api13.what-sticks.com/"
-        case .prod: return "https://api13.what-sticks.com/"
+        case .prod: return "https://prod13.api13.what-sticks.com/"
         }
     }
 }

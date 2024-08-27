@@ -36,8 +36,6 @@ class UserStore {
     
     static let shared = UserStore()
     
-//    let fileManager:FileManager
-//    let documentsURL:URL
     var user=User()
     var arryDataSourceObjects:[DataSourceObject]?
     var boolDashObjExists:Bool!
@@ -53,8 +51,6 @@ class UserStore {
     var currentDashboardObject:DashboardTableObject?
     var currentDashboardObjPos: Int!
     var existing_emails = [String]()
-//    var urlStore:URLStore!
-//    var requestStore:RequestStore!
     var hasLaunchedOnce = false
     var isOnline = false
     var isInDevMode = false
@@ -92,8 +88,6 @@ class UserStore {
         print("---- in assignArryDataSourceObjects() ")
         
         if let unwp_array = jsonResponse["arryDataSourceObjects"] as? [[String: Any]] {
-//            print("What is unwp_array:")
-//            print("\(unwp_array)")
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_data_source_obj = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
