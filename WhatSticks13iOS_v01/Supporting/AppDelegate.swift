@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Sentry
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        print("- in AppDelegate -")
+        SentrySDK.start { options in
+            options.dsn = Config.sentryDSN
+            options.debug = false // Enabled debug when first installing is always helpful
+            options.tracesSampleRate = 1.0
+            options.appHangTimeoutInterval = 40
+
+        }
+
         return true
     }
 

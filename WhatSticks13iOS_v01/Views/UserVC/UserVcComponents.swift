@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import Sentry
+import Sentry
 
 class UserVcFindAppleHealthPermissionsView: UIView {
     let lblTitle = UILabel()
@@ -209,7 +209,7 @@ class UserStatusDevelopmentView: UIView {
             sender.transform = .identity
         }, completion: nil)
         print("-- Activating a Sentry.io Crash")
-//        SentrySDK.crash()
+        SentrySDK.crash()
     }
     
     @objc func touchUpInside_UiCrash(_ sender: UIButton) {
