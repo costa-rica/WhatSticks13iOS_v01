@@ -227,10 +227,9 @@ class UserStatusDevelopmentView: UIView {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
-
-//        UserDefaults.standard.set(false, forKey: "hasShownLaunchVideo")
         UserDefaults.standard.removeObject(forKey: "hasShownLaunchVideo")
-        print("Reset hasShownLaunchVideo ")
+        let hasShownLaunchVideo = UserDefaults.standard.bool(forKey: "hasShownLaunchVideo")
+        delegate?.templateAlert(alertTitle: "Reset hasShownLaunchVideo", alertMessage: "hasShownLaunchVideo: \(hasShownLaunchVideo)", completion: nil)
     }
     
 }
@@ -385,7 +384,7 @@ extension UserStatusDevelopmentView {
         id: \(id)
         token: \(token)
         admin_permission: \(adminPermission)
-        location_permission_device: \(locationPermissionDevice)
+        location_permission_device: \(String(describing: locationPermissionDevice))
         location_permission_ws: \(locationPermissionWS)
         """
 
@@ -470,7 +469,25 @@ extension UserStatusDevelopmentView {
             switch responseYesNo {
             case "Yes":
                 UserStore.shared.deleteUserDefaults_User()
-                self.delegate?.templateAlert(alertTitle: "Deleted UserDefaults", alertMessage: nil, completion: nil)
+                
+                let concatenatedString = """
+                ---- cleared the following ----
+                        userName: nil
+                        email: nil
+                        password: nill
+                id: nil
+                        token: nil
+                admin_permission: nil
+                        location_permission_device: nil
+                        location_permission_ws: nil
+                        arryUserLocation: nil
+                        lastUpdateTimestamp: nil
+                        arryDataSourceObjects: nil
+                        hasShownLaunchVideo: nil
+                """
+                
+                
+                self.delegate?.templateAlert(alertTitle: "Deleted UserDefaults", alertMessage: concatenatedString, completion: nil)
             default:
                 print("")
             }

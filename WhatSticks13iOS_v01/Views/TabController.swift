@@ -70,8 +70,14 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             
             if UserStore.shared.isOnline || UserStore.shared.isGuestMode {
                 manage_data_vc.setupManageDataVcOnline()
-                let records = UserStore.shared.arryDataSourceObjects?[0].recordCount ?? "0"
-                let earliestRecordDate = UserStore.shared.arryDataSourceObjects?[0].earliestRecordDate ?? "no data"
+                var records = "0"
+                var earliestRecordDate = "no data"
+                if let unwp_array = UserStore.shared.arryDataSourceObjects{
+                    if unwp_array.count > 0 {
+                        records = UserStore.shared.arryDataSourceObjects?[0].recordCount ?? "0"
+                        earliestRecordDate = UserStore.shared.arryDataSourceObjects?[0].earliestRecordDate ?? "no data"
+                    }
+                }
                 manage_data_vc.vwManageDataVcHeader.btnRecordCountFilled.setTitle(records, for: .normal)
                 manage_data_vc.vwManageDataVcHeader.btnEarliestDateFilled.setTitle(earliestRecordDate, for: .normal)
             }

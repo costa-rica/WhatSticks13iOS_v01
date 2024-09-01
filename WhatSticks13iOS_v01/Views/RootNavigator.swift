@@ -19,7 +19,7 @@ class RootNavigator: UINavigationController {
     
     private func setupRootViewController() {
         let hasShownLaunchVideo = UserDefaults.standard.bool(forKey: "hasShownLaunchVideo")
-//        print("setupRootViewController, hasShownLaunchVideo: \(hasShownLaunchVideo)")
+        print("setupRootViewController, hasShownLaunchVideo: \(hasShownLaunchVideo)")
 
         if hasShownLaunchVideo {
             showMainTabBar()

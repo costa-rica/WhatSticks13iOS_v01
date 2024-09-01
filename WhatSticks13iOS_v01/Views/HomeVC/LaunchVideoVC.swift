@@ -54,15 +54,20 @@ class LaunchVideoVC: UIViewController {
     }
 
     @objc private func skipTapped() {
+        UserDefaults.standard.set(true, forKey: "hasShownLaunchVideo")
+        print("")
         delayedTransitionTask?.cancel()
         showMainTabBar()
     }
 
     func showMainTabBar(){
         print("- in showMainTabBar()")
+        UserDefaults.standard.set(true, forKey: "hasShownLaunchVideo")
+        let hasShownLaunchVideo = UserDefaults.standard.bool(forKey: "hasShownLaunchVideo")
+        print("hasShownLaunchVideo: \(hasShownLaunchVideo)")
         let mainTabBar = MainTabBarController()
         self.navigationController?.pushViewController(mainTabBar, animated: true)
-        UserDefaults.standard.set(true, forKey: "hasShownLaunchVideo")
+        
     }
     
     
