@@ -233,7 +233,11 @@ class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate, UserVcOfflineDelegat
         setup_vwUserStatus()
         vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
         if let unwp_dataSourceObj = UserStore.shared.arryDataSourceObjects {
-            vwUserStatus.btnRecordCountFilled.setTitle(unwp_dataSourceObj[0].recordCount, for: .normal)
+            if unwp_dataSourceObj.count > 0{
+                vwUserStatus.btnRecordCountFilled.setTitle(unwp_dataSourceObj[0].recordCount, for: .normal)
+            } else {
+                vwUserStatus.btnRecordCountFilled.setTitle("0", for: .normal)
+            }
         }
         NSLayoutConstraint.deactivate(vwUserStatus.constraints_NO_VwRegisterButton)
         vwUserStatus.setup_vcRegistrationButton()
