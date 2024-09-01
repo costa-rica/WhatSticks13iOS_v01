@@ -110,29 +110,45 @@ class AreYouSureModalVC: TemplateVC {
                 self.delegate?.vwLocationDayWeather.setLocationSwitchLabelText()
                 UserStore.shared.deletedUser()
                 OperationQueue.main.addOperation {
-                    if !UserStore.shared.isOnline, UserStore.shared.user.email == nil {
-                        self.delegate?.case_option_1_Offline_and_generic_name()
-                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-                    }else if UserStore.shared.isOnline, UserStore.shared.user.email == nil{
-                        print("UserVC offline connected!!! --")
-                        self.delegate?.case_option_2_Online_and_generic_name()
-                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
-                    } else if UserStore.shared.isOnline, UserStore.shared.user.email != nil{
-                        self.delegate?.case_option_3_Online_and_custom_email()
-                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
-                    } else if !UserStore.shared.isOnline, UserStore.shared.user.email != nil {
-                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-                        self.delegate?.case_option_4_Offline_and_custom_email()
-                    }
                     self.delegate?.removeSpinner()
+                    if !UserStore.shared.isOnline{
+                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", completion: {
+                            
+                            self.delegate?.manageUserVcOptionalViews()
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                    } else {
+                        self.delegate?.templateAlert(alertTitle: "Success!", alertMessage: "", completion: {
+                            
+                            self.delegate?.manageUserVcOptionalViews()
+                            self.dismiss(animated: true, completion: nil)
+                        })
+
+                    }
+//                    if !UserStore.shared.isOnline, UserStore.shared.user.email == nil {
+//                        self.delegate?.case_option_1_Offline_and_generic_name()
+//                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
+//                    }else if UserStore.shared.isOnline, UserStore.shared.user.email == nil{
+//                        print("UserVC offline connected!!! --")
+//                        self.delegate?.case_option_2_Online_and_generic_name()
+//                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
+//                    } else if UserStore.shared.isOnline, UserStore.shared.user.email != nil{
+//                        self.delegate?.case_option_3_Online_and_custom_email()
+//                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
+//                    } else if !UserStore.shared.isOnline, UserStore.shared.user.email != nil {
+//                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
+//                        self.delegate?.case_option_4_Offline_and_custom_email()
+//                    }
+//                    self.delegate?.removeSpinner()
                 }
                 
                 
                 
-                self.templateAlert(alertTitle: "Successfully deleted user", alertMessage: "Your app's generic username has no data associated with it.",dismissView: true)
+//                self.templateAlert(alertTitle: "Successfully deleted user", alertMessage: "Your app's generic username has no data associated with it.",dismissView: true)
             case .failure(let error):
                 print("error: \(error)")
-                self.templateAlert(alertTitle: "Failed to delete", alertMessage: "")
+//                self.templateAlert(alertTitle: "Failed to delete", alertMessage: "")
+                self.delegate?.templateAlert(alertTitle: "Failed to delete", alertMessage: "", completion: nil)
             }
             self.removeSpinner()
         }
@@ -167,7 +183,8 @@ class AreYouSureModalVC: TemplateVC {
 protocol AreYouSureModalVcDelegate: AnyObject {
     func removeSpinner()
     func showSpinner()
-    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
+//    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
+    func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func presentAlertController(_ alertController: UIAlertController)
     func touchDown(_ sender: UIButton)
     func presentNewView(_ uiViewController: UIViewController)
@@ -177,4 +194,5 @@ protocol AreYouSureModalVcDelegate: AnyObject {
     func case_option_2_Online_and_generic_name()
     func case_option_3_Online_and_custom_email()
     func case_option_4_Offline_and_custom_email()
+    func manageUserVcOptionalViews()
 }
