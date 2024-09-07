@@ -19,8 +19,8 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        URLStore.shared.apiBase = .prod
-        URLStore.shared.apiBase = .dev
-//        URLStore.shared.apiBase = .local
+//        URLStore.shared.apiBase = .dev
+        URLStore.shared.apiBase = .local
         
         self.setup_TopSafeBar()
         setupHomeVcHeader()
@@ -63,8 +63,10 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         UserStore.shared.isGuestMode = true
         self.setupNonNormalMode()
         UserStore.shared.connectDevice {
-            self.removeSpinner()
-            self.selectAppModeVc.dismiss(animated: true)
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.selectAppModeVc.dismiss(animated: true)
+            }
         }
     }
     
@@ -77,9 +79,10 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
         self.setupNonNormalMode()
         UserStore.shared.connectDevice {
-            self.selectAppModeVc.dismiss(animated: true)
-            self.removeSpinner()
-            
+            DispatchQueue.main.async {
+                self.selectAppModeVc.dismiss(animated: true)
+                self.removeSpinner()
+            }
         }
     }
     
@@ -95,9 +98,11 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
                 UserStore.shared.isInDevMode = true
 //                self.vwTopSafeBar.backgroundColor = UIColor(named:"ColorDevMode")
                 self.setupNonNormalMode()
-                self.selectAppModeVc.dismiss(animated: true)
-                LocationFetcher.shared.updateInterval = 1
-                self.removeSpinner()
+                DispatchQueue.main.async {
+                    self.selectAppModeVc.dismiss(animated: true)
+                    LocationFetcher.shared.updateInterval = 1
+                    self.removeSpinner()
+                }
             }
         }
     }

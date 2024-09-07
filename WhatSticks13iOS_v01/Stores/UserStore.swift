@@ -365,7 +365,8 @@ extension UserStore{
                                 dictModifiedResponse[key] = value
                             }
                         }
-                        self.assignUser(dictUser: jsonResult)
+                        // 
+//                        self.assignUser(dictUser: jsonResult)
                         
                         // Ensure completion handler is called on the main queue.
                         DispatchQueue.main.async {
