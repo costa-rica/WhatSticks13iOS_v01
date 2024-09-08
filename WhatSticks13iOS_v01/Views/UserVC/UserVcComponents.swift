@@ -371,6 +371,7 @@ extension UserStatusDevelopmentView {
         
         let email = userStore.user.email ?? "nil"
         let username = userStore.user.username ?? "nil"
+//        let password = userStore.password ?? "nil"
         let id = userStore.user.id ?? "nil"
         let token = userStore.user.token ?? "nil"
         let adminPermission = userStore.user.admin_permission ?? false
@@ -381,6 +382,7 @@ extension UserStatusDevelopmentView {
         ---- UserStore.user ----
         email: \(email)
         username: \(username)
+        password: Local user never has password
         id: \(id)
         token: \(token)
         admin_permission: \(adminPermission)
@@ -392,6 +394,7 @@ extension UserStatusDevelopmentView {
 
         let email_ud = UserDefaults.standard.string(forKey: "email") ?? "nil"
         let userName_ud = UserDefaults.standard.string(forKey: "userName") ?? "nil"
+        let password_ud = UserDefaults.standard.string(forKey: "password") ?? "nil"
         let id_ud = UserDefaults.standard.string(forKey: "id") ?? "nil"
         let token_ud = UserDefaults.standard.string(forKey: "token") ?? "nil"
         let adminPermission_ud = UserDefaults.standard.string(forKey: "admin_permission") ?? "nil"
@@ -402,6 +405,7 @@ extension UserStatusDevelopmentView {
         ---- UserDefaults ----
         email_ud: \(email_ud)
         userName_ud: \(userName_ud)
+        password: \(password_ud)
         id_ud: \(id_ud)
         token_ud: \(token_ud)
         admin_permission_ud: \(adminPermission_ud)

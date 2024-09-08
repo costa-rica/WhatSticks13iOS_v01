@@ -139,21 +139,12 @@ class RegModalVC: TemplateVC {
                 print("email: \(email)")
                 print("userStore.user.username: \(unwp_username)")
                 print("password: \(password)")
+                
                 self.showSpinner()
                 userStore.callConvertGenericAccountToCustomAccount(email: email, username: unwp_username, password: password) { result_StringDict_or_error in
                     switch result_StringDict_or_error {
                     case let .success(dictString):
                         print("successful response: \(dictString)")
-//                        print("? 1 ----> username: \(self.userStore.user.username)")
-//                        if let unwp_password = self.user.password{
-//                        UserDefaults.standard.set(password, forKey: "password")
-//                        self.userStore.user.password = password
-//                            print("password saved as: \(unwp_password) -- step 4")
-//                        }
-//                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(self.userStore.user.username, for: .normal)
-
-                        
-                        
                         OperationQueue.main.addOperation {
                             self.delegate?.removeSpinner()
                             if !UserStore.shared.isOnline{
@@ -166,7 +157,9 @@ class RegModalVC: TemplateVC {
                                 if let unwp_title = dictString["alert_title"], let unwp_alert = dictString["alert_message"]{
                                     self.delegate?.templateAlert(alertTitle: unwp_title, alertMessage: unwp_alert, completion: {
                                         
-//                                        self.delegate?.manageUserVcOptionalViews()
+                                        UserDefaults.standard.set(password, forKey: "password")
+                                        UserDefaults.standard.set(email, forKey: "email")
+                                        UserDefaults.standard.set(true, forKey: "pendingEmailValidation")
                                         self.dismiss(animated: true, completion: nil)
                                     })
                                 } else {

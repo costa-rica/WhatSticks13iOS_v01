@@ -123,8 +123,6 @@ class UserStore {
         print("---- in assignArryDashboardTableObjects() ")
         
         if let unwp_array = jsonResponse["arryDashboardTableObjects"] as? [[String: Any]] {
-//            print("What is unwp_array:")
-//            print("\(unwp_array)")
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_dashboard_table_obj = try JSONDecoder().decode([DashboardTableObject].self, from: jsonData)
@@ -134,9 +132,6 @@ class UserStore {
                 let encodedData = try JSONEncoder().encode(self.arryDashboardTableObjects)
                 // Store the encoded Data in UserDefaults
                 UserDefaults.standard.set(encodedData, forKey: "arryDashboardTableObjects")
-//                print("--- successfully decodeed arryDashboardTableObjects")
-//                print("self.arryDashboardTableObjects:")
-//                print(self.arryDashboardTableObjects)
             }
             catch {
                 print("failed to decode arryDashboardTableObjects into [DashboardTableObject]")
@@ -235,27 +230,27 @@ class UserStore {
                 }
             }
             // Condition #2: Login with Generic Elf
-            else if UserDefaults.standard.string(forKey: "email") == nil  {
+            else if UserDefaults.standard.string(forKey: "email") == nil || UserDefaults.standard.bool(forKey: "pendingEmailValidation")  {
                 self.user.username  = UserDefaults.standard.string(forKey: "userName")
                 // /login user
-                if UserDefaults.standard.string(forKey: "userEmail") == nil {
-                    callLoginGenericUser(user: self.user) { result_dict_string_any_or_error in
-                        switch result_dict_string_any_or_error {
-                        case  .success(_):
-                            self.isOnline=true
-                            RequestStore.shared.token = self.user.token
-                            completion()
-                        case .failure(_):
-                            print("--- Off line mode (Condition #2:)")
-                            self.loadArryDataSourceObjectsFromUserDefaults()
-                            self.loadArryDashboardTableFromUserDefaults()
-                            completion()
-                        }
+//                if UserDefaults.standard.string(forKey: "userEmail") == nil {
+                callLoginGenericUser(user: self.user) { result_dict_string_any_or_error in
+                    switch result_dict_string_any_or_error {
+                    case  .success(_):
+                        self.isOnline=true
+                        RequestStore.shared.token = self.user.token
+                        completion()
+                    case .failure(_):
+                        print("--- Off line mode (Condition #2:)")
+                        self.loadArryDataSourceObjectsFromUserDefaults()
+                        self.loadArryDashboardTableFromUserDefaults()
+                        completion()
                     }
-                } else {
-                    print("login real user")
-                    completion()
                 }
+//                } else {
+//                    print("login real user")
+//                    completion()
+//                }
             }
             // Condition #3: Login with account
             else {
@@ -289,8 +284,6 @@ class UserStore {
             }
         }
     }
-    
-    
     func loadGuestDashboardTableObjectsArray() {
         if let url = Bundle.main.url(forResource: "data_table_objects_array_guest", withExtension: "json") {
             do {
@@ -303,7 +296,6 @@ class UserStore {
             }
         }
     }
-    
     func loadGuestUser(){
         self.isGuestMode = true
         self.user.username = "Guest User"
@@ -447,9 +439,13 @@ extension UserStore{
     func callLoginGenericUser(user:User, completion: @escaping(Result<[String:Any],Error>) ->Void){
         print("- in callLoginGenericUser -")
         var parameters: [String: String] = ["ws_api_password": Config.ws_api_password]
-        if let username = user.username {
-            parameters["username"] = username
-        } else {
+//        if let username = user.username {
+//            parameters["username"] = username
+//        } 
+        if let userId = user.id {
+            parameters["user_id"] = userId
+        }
+        else {
             completion(.failure(UserStoreError.failedToLogin))
             return
         }
