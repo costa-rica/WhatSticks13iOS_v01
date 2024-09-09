@@ -18,9 +18,9 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        URLStore.shared.apiBase = .prod
+        URLStore.shared.apiBase = .prod
 //        URLStore.shared.apiBase = .dev
-        URLStore.shared.apiBase = .local
+//        URLStore.shared.apiBase = .local
         
         self.setup_TopSafeBar()
         setupHomeVcHeader()

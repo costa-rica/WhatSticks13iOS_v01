@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate, UserVcOfflineDelegate, UserVcRegisterButtonDelegate, UserVcDeleteDelegate, RegModalVcDelegate, AreYouSureModalVcDelegate, UserStatusDevelopmentViewDelegate{
+class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate, UserVcOfflineDelegate, UserVcRegisterButtonDelegate, UserVcDeleteDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserStatusDevelopmentViewDelegate{
 
     
     let scrollView = UIScrollView()

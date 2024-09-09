@@ -25,10 +25,6 @@ class UserVcRegisterButton: UIView {
         setup_UserVcRegisterButton()
     }
     
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        setup_UserVcRegisterButton()
-//    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -105,7 +101,6 @@ class UserVcRegisterButton: UIView {
             lblWhyRegisterDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: widthFromPct(percent: 3)),
             lblWhyRegisterDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: widthFromPct(percent: -1)),
             lblWhyRegisterDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -5))
-            
         ])
         
     }
@@ -128,12 +123,13 @@ class UserVcRegisterButton: UIView {
             self.delegate?.presentNewView(informationVc)
         }
         else {
-            let regModalVC = RegModalVC()
+//            let regModalVC = RegModalVC()
+            let registerVC = RegisterVC()
             // Set the modal presentation style
-            regModalVC.modalPresentationStyle = .overCurrentContext
-            regModalVC.modalTransitionStyle = .crossDissolve
-            self.delegate?.presentNewView(regModalVC)
-            regModalVC.delegate = self.delegate as? any RegModalVcDelegate
+            registerVC.modalPresentationStyle = .overCurrentContext
+            registerVC.modalTransitionStyle = .crossDissolve
+            self.delegate?.presentNewView(registerVC)
+            registerVC.delegate = self.delegate as? any RegisterVcDelegate
         }
     }
     

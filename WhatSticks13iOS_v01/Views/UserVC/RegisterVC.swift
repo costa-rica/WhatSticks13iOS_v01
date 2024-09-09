@@ -8,8 +8,10 @@
 import UIKit
 
 
-class RegModalVC: TemplateVC {
-    weak var delegate: RegModalVcDelegate?
+//class RegModalVC: TemplateVC {
+class RegisterVC: TemplateVC, UITextFieldDelegate {
+//    weak var delegate: RegModalVcDelegate?
+    weak var delegate: RegisterVcDelegate?
     let userStore = UserStore.shared
     // Declare the text fields
     let txtEmail = UITextField()
@@ -29,6 +31,8 @@ class RegModalVC: TemplateVC {
         setup_textfields()
         setup_btnRegister()
         addTapGestureRecognizer()
+        txtEmail.delegate = self
+        txtPassword.delegate = self
         
     }
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -144,7 +148,7 @@ class RegModalVC: TemplateVC {
                 userStore.callConvertGenericAccountToCustomAccount(email: email, username: unwp_username, password: password) { result_StringDict_or_error in
                     switch result_StringDict_or_error {
                     case let .success(dictString):
-                        print("successful response: \(dictString)")
+//                        print("successful response: \(dictString)")
                         OperationQueue.main.addOperation {
                             self.delegate?.removeSpinner()
                             if !UserStore.shared.isOnline{
@@ -171,26 +175,9 @@ class RegModalVC: TemplateVC {
                                 }
 
                             }
-//                            if !self.userStore.isOnline, self.userStore.user.email == nil {
-//                                self.delegate?.case_option_1_Offline_and_generic_name()
-//                                self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-//                            }else if self.userStore.isOnline, self.userStore.user.email == nil{
-//                                print("UserVC offline connected!!! --")
-//                                self.delegate?.case_option_2_Online_and_generic_name()
-//                            } else if self.userStore.isOnline, self.userStore.user.email != nil{
-//                                self.delegate?.case_option_3_Online_and_custom_email()
-//                            } else if !self.userStore.isOnline, self.userStore.user.email != nil {
-//                                self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-//                                self.delegate?.case_option_4_Offline_and_custom_email()
-//                            }
-                            
                         }
                         
-                        
-                        
-//                        self.templateAlert(alertTitle: "Success!", alertMessage: "",dismissView: true)
-                    case let .failure(error):
-//                        self.templateAlert(alertTitle: "Unsuccsessful :/", alertMessage: "\(error.localizedDescription)")
+                    case .failure(_):
                         self.delegate?.templateAlert(alertTitle: "Unsuccsessful :/", alertMessage: "", completion: nil)
                     }
                     self.removeSpinner()
@@ -198,13 +185,10 @@ class RegModalVC: TemplateVC {
                 
                 
             } else {
-//                self.templateAlert(alertTitle: "", alertMessage: "Must have password")
                 self.delegate?.templateAlert(alertTitle: "Must have password", alertMessage: "", completion: nil)
             }
         } else {
-//            self.templateAlert(alertTitle: "", alertMessage: "Must valid have email")
             self.delegate?.templateAlert(alertTitle: "Must valid have email", alertMessage: "", completion: nil)
-            
         }
     }
     
@@ -224,18 +208,28 @@ class RegModalVC: TemplateVC {
              // If the keyboard is present, dismiss it
              firstResponder.resignFirstResponder()
          } else if !vwRegisterVC.bounds.contains(tapLocationInView) {
-             
              // If the keyboard is not present and the tap is outside of vwRegisterVC, dismiss the view controller
              dismiss(animated: true, completion: nil)
-             
          }
-
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Click "Return"
+        if textField == txtEmail {
+            txtPassword.becomeFirstResponder()
+            // if txtEmail was active, now activates txtPassword
+        } else {
+            textField.resignFirstResponder()
+            // if txtPassword was activated, removes keyboard
+        }
+        return true
+        
     }
     
 }
 
 
-protocol RegModalVcDelegate: AnyObject {
+protocol RegisterVcDelegate: AnyObject {
     func removeSpinner()
     func showSpinner()
 //    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
