@@ -148,9 +148,6 @@ class UserVcLocationDayWeather: UIView {
     }
     
     
-    
-    
-    
     /* Obj-C Methods */
     @objc func switchValueChanged(_ sender: UISwitch) {
         print("- in switchValueChanged")

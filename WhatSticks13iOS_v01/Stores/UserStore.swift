@@ -659,6 +659,7 @@ extension UserStore {
                     guard let message = jsonResult["alert_message"] as? String else {
                         throw UserStoreError.failedDecode
                     }
+                    self.assignArryDashboardTableObjects(jsonResponse: jsonResult)
                     OperationQueue.main.addOperation {
                         print("--> successful callUpdateUser api response")
                         completion(.success(message))
