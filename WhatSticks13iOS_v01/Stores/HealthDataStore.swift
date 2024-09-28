@@ -177,6 +177,12 @@ extension HealthDataStore {
             do {
                 if let jsonResult = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: String] {
                     DispatchQueue.main.async {
+                        // Delete UserStore.arrayDataSource
+                        // arrayDashbaord
+                        // location
+                        // UserDefault.arrayDataSource
+                        // UserDefault.arrayAppleHealthDashbaord
+                        // UserDefault.location
                         completion(.success(jsonResult))
                     }
                 } else {

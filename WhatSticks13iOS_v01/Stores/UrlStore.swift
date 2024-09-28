@@ -38,7 +38,7 @@ enum EndPoint: String {
     
     case send_data_source_objects = "send_data_source_objects"
     case send_dashboard_table_objects = "send_dashboard_table_objects"
-    
+    case send_both_data_source_and_dashboard_objects = "send_both_data_source_and_dashboard_objects"
 }
 
 class URLStore {

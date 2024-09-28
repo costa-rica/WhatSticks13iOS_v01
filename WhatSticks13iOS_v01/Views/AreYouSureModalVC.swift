@@ -9,6 +9,7 @@ import UIKit
 
 class AreYouSureModalVC: TemplateVC {
     weak var delegate: AreYouSureModalVcDelegate?
+    weak var delegateManageDataVc: AreYouSureModalVcDelegateDeleteUserHealthData?
 //    let userStore = UserStore.shared
     
     var vwAreYouSureModalVC = UIView()
@@ -16,13 +17,23 @@ class AreYouSureModalVC: TemplateVC {
     var lblDetails:UILabel?
     
     let btnAreYouSure = UIButton()
+    
+    // for ManageDataVC (i.e. delete User's apple health)
+    let btnDeleteUserAppleHealth = UIButton()
 
     init(strForBtnTitle: String? = nil, strForLblDetails: String? = nil) {
         self.lblDetails = UILabel()
         self.lblDetails?.text = strForLblDetails
-        self.btnAreYouSure.setTitle(strForBtnTitle, for: .normal)
-//        self.optionalString = optionalString
         super.init(nibName: nil, bundle: nil)
+        self.setup_btnAreYouSure()
+        self.btnAreYouSure.setTitle(strForBtnTitle, for: .normal)
+    }
+    init(strForDeleteUserHealthBtn: String? = nil, strForLblDetails: String? = nil) {
+        self.lblDetails = UILabel()
+        self.lblDetails?.text = strForLblDetails
+        super.init(nibName: nil, bundle: nil)
+        self.setup_btnDeleteUserAppleHealth()
+        btnDeleteUserAppleHealth.setTitle(strForDeleteUserHealthBtn, for: .normal)
     }
     init(){
         super.init(nibName: nil, bundle: nil)
@@ -37,7 +48,7 @@ class AreYouSureModalVC: TemplateVC {
         super.viewDidLoad()
         setup_vwAreYouSureModalVC()
         setup_lblRegister()
-        setup_btnRegister()
+//        setup_btnAreYouSure()
         addTapGestureRecognizer()
         
     }
@@ -74,7 +85,8 @@ class AreYouSureModalVC: TemplateVC {
         ])
     }
     
-    func setup_btnRegister(){
+//    func setup_btnRegister(){
+    func setup_btnAreYouSure(){
         btnAreYouSure.layer.borderColor = UIColor.systemRed.cgColor
         btnAreYouSure.layer.borderWidth = 2
         btnAreYouSure.backgroundColor = .systemRed
@@ -177,6 +189,48 @@ class AreYouSureModalVC: TemplateVC {
 
     }
     
+    
+    // For Delete User Apple Health from ManageDataVC
+    
+    func setup_btnDeleteUserAppleHealth(){
+        btnDeleteUserAppleHealth.layer.borderColor = UIColor.systemRed.cgColor
+        btnDeleteUserAppleHealth.layer.borderWidth = 2
+        btnDeleteUserAppleHealth.backgroundColor = .systemRed
+        btnDeleteUserAppleHealth.layer.cornerRadius = 10
+        btnDeleteUserAppleHealth.translatesAutoresizingMaskIntoConstraints = false
+        btnDeleteUserAppleHealth.accessibilityIdentifier="btnDeleteUserAppleHealth"
+        vwAreYouSureModalVC.addSubview(btnDeleteUserAppleHealth)
+        NSLayoutConstraint.activate([
+
+            btnDeleteUserAppleHealth.centerYAnchor.constraint(equalTo: vwAreYouSureModalVC.centerYAnchor),
+            btnDeleteUserAppleHealth.centerXAnchor.constraint(equalTo: vwAreYouSureModalVC.centerXAnchor),
+            btnDeleteUserAppleHealth.widthAnchor.constraint(equalToConstant: widthFromPct(percent: 80)),
+        ])
+        
+        btnDeleteUserAppleHealth.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
+        btnDeleteUserAppleHealth.addTarget(self, action: #selector(touchUpInsideDeleteUserHealth(_:)), for: .touchUpInside)
+    }
+    
+    
+    @objc func touchUpInsideDeleteUserHealth(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
+            sender.transform = .identity
+        }, completion: nil)
+        
+        print("Delete User Apple Health 🍏🍎 data")
+        showSpinner()
+        HealthDataStore.shared.callDeleteAppleHealthData { resultStringDict in
+            switch resultStringDict{
+            case let .success(stringDict):
+                print("- successfully deleted ")
+                UserStore.shared.deleteUserForManageDataVc()
+                
+            case .failure(_):
+                print("- failed to delete user's apple health data from ManageDataVC/AreYouSureModalVC")
+            }
+            self.removeSpinner()
+        }
+    }
 }
 
 
@@ -195,4 +249,14 @@ protocol AreYouSureModalVcDelegate: AnyObject {
     func case_option_3_Online_and_custom_email()
     func case_option_4_Offline_and_custom_email()
     func manageUserVcOptionalViews()
+}
+
+
+protocol AreYouSureModalVcDelegateDeleteUserHealthData: AnyObject {
+    func removeSpinner()
+    func showSpinner()
+    //    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
+    func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
+    func presentAlertController(_ alertController: UIAlertController)
+    func touchDown(_ sender: UIButton)
 }

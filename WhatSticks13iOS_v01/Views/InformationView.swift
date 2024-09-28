@@ -11,6 +11,8 @@ import UIKit
 class InformationVC: TemplateVC {
     var vwInformation = InformationView()
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.frame = UIScreen.main.bounds.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
@@ -37,12 +39,9 @@ class InformationVC: TemplateVC {
         vwInformation.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive=true
         vwInformation.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95).isActive=true
         
-//        lblSelectAppModeVcTitle.accessibilityIdentifier="lblSelectAppModeVcTitle"
-//        lblSelectAppModeVcTitle.text = "Select Mode:"
-//        lblSelectAppModeVcTitle.font = UIFont(name: "ArialRoundedMTBold", size: 30)
-//        lblSelectAppModeVcTitle.translatesAutoresizingMaskIntoConstraints=false
-//        vwSelectAppModeBackground.addSubview(lblSelectAppModeVcTitle)
     }
+    
+
     
     private func addTapGestureRecognizer() {
         // Create a tap gesture recognizer
@@ -53,13 +52,19 @@ class InformationVC: TemplateVC {
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
             dismiss(animated: true, completion: nil)
     }
+    
+
+
 }
 
 
 class InformationView: UIView {
     let lblTitle = UILabel()
     let lblDescription = UILabel()
-
+    
+    var btnRefreshDashboard = UIButton()
+    weak var delegate: InformationViewDelegate?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,7 +105,60 @@ class InformationView: UIView {
             lblDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
             lblDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
             
-            lblDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
+//            lblDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
+            lblDescription.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
         ])
     }
+    
+    func setup_btnRefreshDashboard(){
+//        if let btnRefreshDashboard = btnRefreshDashboard {
+        btnRefreshDashboard.setTitle("Refresh Dashboard", for: .normal)
+        btnRefreshDashboard.layer.borderColor = UIColor.systemBlue.cgColor
+        btnRefreshDashboard.layer.borderWidth = 2
+        btnRefreshDashboard.backgroundColor = .blue
+        btnRefreshDashboard.layer.cornerRadius = 10
+        btnRefreshDashboard.translatesAutoresizingMaskIntoConstraints = false
+        btnRefreshDashboard.accessibilityIdentifier="btnRefreshDashboard"
+//        view.addSubview(btnRefreshDashboard)
+        self.addSubview(btnRefreshDashboard)
+        NSLayoutConstraint.activate([
+            btnRefreshDashboard.topAnchor.constraint(equalTo: lblDescription.bottomAnchor, constant: heightFromPct(percent: 2)),
+            btnRefreshDashboard.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            btnRefreshDashboard.widthAnchor.constraint(equalToConstant: widthFromPct(percent: 80)),
+            btnRefreshDashboard.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
+        ])
+        
+        btnRefreshDashboard.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
+        btnRefreshDashboard.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
+//        }
+    }
+    @objc func touchDown(_ sender: UIButton) {
+//        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: {
+//            sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//        }, completion: nil)
+        delegate?.touchDown(sender)
+    }
+    @objc func touchUpInside(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
+            sender.transform = .identity
+        }, completion: nil)
+        
+        print("🚀 referesh dashboard 🚀 🚀 🚀")
+        UserStore.shared.callSendDashboardTableObjects { resultJsonDict in
+            switch resultJsonDict{
+            case .success(_):
+                print("- we recieved data source and dashboard data")
+            case let .failure(userStoreError):
+                print("- failed to get data from send_both_data_source_and_dashboard_objects endpoint, error is: \(userStoreError.localizedDescription)")
+            }
+        }
+    }
+
 }
+
+protocol InformationViewDelegate: AnyObject {
+    func touchDown(_ sender: UIButton)
+    func update_arryDashboardTableObjects()
+}
+
+

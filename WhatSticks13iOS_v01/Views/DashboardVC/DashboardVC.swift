@@ -7,18 +7,19 @@
 
 import UIKit
 
-class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegate {
+class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegate,InformationViewDelegate {
     
     var userStore:UserStore!
     let vwDashboardHeader = DashboardHeader()
     var tblDashboard:UITableView?
     var vwDashboardHasNoData = InformationView()
 
-    //    var refreshControlTblDashboard:UIRefreshControl?
+    var refreshControlTblDashboard:UIRefreshControl?
     override func viewDidLoad() {
         super.viewDidLoad()
         userStore = UserStore.shared
         vwDashboardHeader.delegate = self
+        
         setup_TopSafeBar()
 
         navigationController?.setNavigationBarHidden(true, animated: false)// This seems to really hide the UINavigationBar
@@ -27,6 +28,8 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
     func setupUserHasNODashboard(){
         vwDashboardHeader.removeFromSuperview()
         tblDashboard?.removeFromSuperview()
+        vwDashboardHasNoData.delegate = self
+        vwDashboardHasNoData.setup_btnRefreshDashboard()
         vwDashboardHasNoData.lblTitle.text = "No Data"
         vwDashboardHasNoData.lblDescription.text = "Go to Manage Data to submit your data for analysis"
         vwDashboardHasNoData.accessibilityIdentifier="vwDashboardHasNoData"
@@ -45,7 +48,6 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         setup_vwDashboardHeader()
         setup_tblDashboard()
     }
-    
     
     private func setup_vwDashboardHeader(){
         vwDashboardHeader.accessibilityIdentifier = "vwDashboardHeader"
@@ -78,9 +80,14 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
             tblDashboard!.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
         
-//        self.refreshControlTblDashboard = UIRefreshControl()
-//        refreshControlTblDashboard!.addTarget(self, action: #selector(self.refresh_tblDashboardData(_:)), for: .valueChanged)
-//        self.tblDashboard!.refreshControl = refreshControlTblDashboard!
+        self.refreshControlTblDashboard = UIRefreshControl()
+        refreshControlTblDashboard!.addTarget(self, action: #selector(self.refresh_tblDashboardData(_:)), for: .valueChanged)
+        self.tblDashboard!.refreshControl = refreshControlTblDashboard!
+    }
+    
+    func updateDataSourceAndDashboardReferences(){
+        print("- in DashboardVC / updateDataSourceAndDashboardReferences() --")
+        print(userStore.arryDataSourceObjects)
     }
     
     
@@ -117,6 +124,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         }
     }
     
+
     
     @objc func touchUpInside_btnSelectDashboards(_ sender: UIRefreshControl){
         print("present SelectDashboardVC")
@@ -137,15 +145,59 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         let infoVC = InformationVC()
         infoVC.vwInformation.lblTitle.text = title
         infoVC.vwInformation.lblDescription.text = description
-//        let infoVC = InfoVC(dashboardTableObject: UserStore.shared.currentDashboardObject)
+//        infoVC.setup_btnRefreshDashboard()
         infoVC.modalPresentationStyle = .overCurrentContext
         infoVC.modalTransitionStyle = .crossDissolve
         self.present(infoVC, animated: true, completion: nil)
-//        delegate?.presentNewView(infoVC)
+
     }
     
 
 }
+
+
+// Pull Down Refresh
+extension DashboardVC {
+    
+    @objc private func refresh_tblDashboardData(_ sender: UIRefreshControl){
+        self.update_arryDashboardTableObjects()
+    }
+    
+    
+    func update_arryDashboardTableObjects(){
+        UserStore.shared.callSendDashboardTableObjects { resultDashTableObj in
+            switch resultDashTableObj{
+            case .success(_):
+                print("- Success: userStore.arryDashboardTableObjects updated with \(self.userStore.arryDashboardTableObjects.count) dash objects")
+                if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
+                    DispatchQueue.main.async {
+                        unwp_refreshControlTblDashboard.endRefreshing()
+                    }
+                }
+                if let unwp_tblDashboard = self.tblDashboard {
+                    DispatchQueue.main.async {
+                        unwp_tblDashboard.reloadData()
+                    }
+                }
+//                self.checkDashboardTableObjectNew()
+                self.updateDataSourceAndDashboardReferences()
+            case let .failure(error):
+                print("failure: DashboardVC trying to update dashboard via func update_arryDashboardTableObjects; the error is \(error)")
+                if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
+                    DispatchQueue.main.async {
+                        unwp_refreshControlTblDashboard.endRefreshing()
+                    }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.templateAlert(alertTitle: "No Data Found Dashboard", alertMessage: "If you just added data, it could take a couple minutes to process. \n\nOtherwise try adding data.")
+                }
+
+            }
+        }
+    }
+}
+
+
 
 extension DashboardVC: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

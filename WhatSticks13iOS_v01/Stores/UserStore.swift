@@ -81,7 +81,16 @@ class UserStore {
         currentDashboardObjPos=0
         UserDefaults.standard.removeObject(forKey: "arryDashboardTableObjects")
         UserDefaults.standard.removeObject(forKey: "arryDataSourceObjects")
-
+    }
+    func deleteUserForManageDataVc(){
+        arryDashboardTableObjects = [DashboardTableObject]()
+        arryDataSourceObjects = [DataSourceObject]()
+        currentDashboardObject=DashboardTableObject()
+        currentDashboardObjPos=0
+        UserDefaults.standard.removeObject(forKey: "arryDashboardTableObjects")
+        UserDefaults.standard.removeObject(forKey: "arryDataSourceObjects")
+        LocationFetcher.shared.arryUserLocation = []
+        UserDefaults.standard.removeObject(forKey: "lastUpdateTimestamp")
     }
     
     func assignArryDataSourceObjects(jsonResponse:[String:Any]){
@@ -678,33 +687,65 @@ extension UserStore {
 
 /* Receive Apple Health Statistics from API */
 extension UserStore {
-    func callSendDataSourceObjects(completion:@escaping (Result<Bool,Error>) -> Void){
-        print("- in callSendDataSourceObjects")
-        let request = RequestStore.shared.createRequestWithToken(endpoint: .send_data_source_objects)
-        let task = RequestStore.shared.session.dataTask(with: request) { data, urlResponse, error in
+    
+    func callSendDashboardTableObjects(completion:@escaping(Result<[String:Any], UserStoreError>)->Void){
+        let request = RequestStore.shared.createRequestWithToken(endpoint: .send_both_data_source_and_dashboard_objects)
+        
+        let task = RequestStore.shared.session.dataTask(with: request) { data, response, error in
             guard let unwrapped_data = data else {
                 OperationQueue.main.addOperation {
                     completion(.failure(UserStoreError.failedToReceiveServerResponse))
                 }
                 return
             }
+            
             do {
-                let jsonDecoder = JSONDecoder()
-                let jsonArryDataSourceObj = try jsonDecoder.decode([DataSourceObject].self, from: unwrapped_data)
-                OperationQueue.main.addOperation {
-                    print("- decoded jsonArryDataSourceObj")
-                    let repackagedJsonResponse = ["arryDataSourceObjects":jsonArryDataSourceObj] as [String:Any]
-                    // MARK: call assingDataSourceObjects
-                    self.assignArryDataSourceObjects(jsonResponse: repackagedJsonResponse)
-                    completion(.success(true))
+                // Convert the data to a dictionary
+                if let jsonResponse = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
+                    self.assignUser(dictUser: jsonResponse)
+                    self.assignArryDashboardTableObjects(jsonResponse: jsonResponse)
+                    self.assignArryDataSourceObjects(jsonResponse: jsonResponse)
+                    completion(.success(jsonResponse))
+                    // Now you can read values from jsonResponse using keys
                 }
-            } catch {
-                print("did not get expected response from WSAPI - probably no file for user")
-                OperationQueue.main.addOperation {
-                    completion(.failure(UserStoreError.failedToReceiveExpectedResponse))
-                }
+            } catch{
+                print("- failed to: UserStoreError.failedDecode")
+                completion(.failure(UserStoreError.failedDecode))
+                return
             }
+            
         }
         task.resume()
+        
     }
+    
+//    func callSendDataSourceObjects(completion:@escaping (Result<Bool,Error>) -> Void){
+//        print("- in callSendDataSourceObjects")
+//        let request = RequestStore.shared.createRequestWithToken(endpoint: .send_data_source_objects)
+//        let task = RequestStore.shared.session.dataTask(with: request) { data, urlResponse, error in
+//            guard let unwrapped_data = data else {
+//                OperationQueue.main.addOperation {
+//                    completion(.failure(UserStoreError.failedToReceiveServerResponse))
+//                }
+//                return
+//            }
+//            do {
+//                let jsonDecoder = JSONDecoder()
+//                let jsonArryDataSourceObj = try jsonDecoder.decode([DataSourceObject].self, from: unwrapped_data)
+//                OperationQueue.main.addOperation {
+//                    print("- decoded jsonArryDataSourceObj")
+//                    let repackagedJsonResponse = ["arryDataSourceObjects":jsonArryDataSourceObj] as [String:Any]
+//                    // MARK: call assingDataSourceObjects
+//                    self.assignArryDataSourceObjects(jsonResponse: repackagedJsonResponse)
+//                    completion(.success(true))
+//                }
+//            } catch {
+//                print("did not get expected response from WSAPI - probably no file for user")
+//                OperationQueue.main.addOperation {
+//                    completion(.failure(UserStoreError.failedToReceiveExpectedResponse))
+//                }
+//            }
+//        }
+//        task.resume()
+//    }
 }

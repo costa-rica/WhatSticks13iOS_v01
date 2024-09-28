@@ -57,7 +57,7 @@ class RequestStore {
     func createRequestWithToken(endpoint:EndPoint) ->URLRequest{
         let url = URLStore.shared.callEndpoint(endPoint: endpoint)
         var request = URLRequest(url:url)
-        request.httpMethod = "POST"
+//        request.httpMethod = "POST"
         request.addValue("application/json",forHTTPHeaderField: "Content-Type")
         request.addValue("application/json",forHTTPHeaderField: "Accept")
         request.setValue( self.token, forHTTPHeaderField: "x-access-token")

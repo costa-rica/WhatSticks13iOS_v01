@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ManageDataVC: TemplateVC {
+class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
 //    var userStore: UserStore!
 //    var appleHealthDataFetcher:AppleHealthDataFetcher!
 //    var healthDataStore: HealthDataStore!
@@ -46,6 +46,8 @@ class ManageDataVC: TemplateVC {
     
     var strStatusMessage=String()
     
+    var btnDeleteData = UIButton()
+    
     override func viewDidLoad() {
 //        userStore = UserStore.shared
         if !UserStore.shared.isGuestMode{
@@ -60,6 +62,7 @@ class ManageDataVC: TemplateVC {
     func setupManageDataVcOffline(){
         datePicker.removeFromSuperview()
         btnSendData.removeFromSuperview()
+        btnDeleteData.removeFromSuperview()
         vwManageDataVcOffline.lblTitle.text = "Ooops ...."
         vwManageDataVcOffline.lblDescription.text = "This app has not been able to connect with the What Sticks server. Either restart or try back later...  ¯\\_(ツ)_/¯"
         vwManageDataVcOffline.accessibilityIdentifier="vwDashboardHasNoData"
@@ -79,6 +82,7 @@ class ManageDataVC: TemplateVC {
 //        setup_UserVcAccountView()
         setupDatePicker()
         setup_btnSendData()
+        setup_btnDeleteData()
     }
     
     func setupManageDataVcHeaderView(){
@@ -94,7 +98,6 @@ class ManageDataVC: TemplateVC {
 //            vwManageDataVcHeader.bottomAnchor.constraint(equalTo: vwTopSafeBar.bottomAnchor, constant: heightFromPct(percent: 10))
         ])
     }
-
 
     func setupDatePicker() {
         datePicker.datePickerMode = .date
@@ -124,7 +127,25 @@ class ManageDataVC: TemplateVC {
         ])
     }
     
-
+    func setup_btnDeleteData(){
+        btnDeleteData.accessibilityIdentifier = "btnDeleteData"
+        btnDeleteData.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(btnDeleteData)
+        btnDeleteData.setTitle("Delete User Data", for: .normal)
+//        btnDeleteData.layer.borderColor = UIColor.systemBlue.cgColor
+        btnDeleteData.layer.borderWidth = 2
+        btnDeleteData.backgroundColor = UIColor(red: 0.8, green: 0.3, blue: 0.3, alpha: 1.0)
+        btnDeleteData.layer.cornerRadius = 10
+        
+        btnDeleteData.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
+        btnDeleteData.addTarget(self, action: #selector(touchUpInsideCallDeleteData(_:)), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            btnDeleteData.topAnchor.constraint(equalTo: btnSendData.bottomAnchor, constant: heightFromPct(percent: 2)),
+            btnDeleteData.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: widthFromPct(percent: 3)),
+            btnDeleteData.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: widthFromPct(percent: -3))
+        ])
+    }
+    
     
     @objc func touchUpInsideStartCollectingAppleHealth(_ sender: UIButton) {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
@@ -153,6 +174,22 @@ class ManageDataVC: TemplateVC {
             }
             actionGetStepsData()
         }
+    }
+    
+    @objc func touchUpInsideCallDeleteData(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
+            sender.transform = .identity
+        }, completion: nil)
+        print(" send call to delete user data 📢❗🚨")
+        //        let areYouSureVC = AreYouSureModalVC()
+        let areYouSureVC = AreYouSureModalVC(strForDeleteUserHealthBtn: "Yes, delete")
+        
+        // Set the modal presentation style
+        areYouSureVC.modalPresentationStyle = .overCurrentContext
+        areYouSureVC.modalTransitionStyle = .crossDissolve
+        areYouSureVC.delegateManageDataVc = self
+//        self.delegate?.presentNewView(areYouSureVC)
+        self.present(areYouSureVC, animated: true, completion: nil)
     }
 }
 
