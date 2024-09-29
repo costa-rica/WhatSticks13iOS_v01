@@ -109,9 +109,14 @@ class InformationView: UIView {
             lblDescription.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
         ])
     }
-    
+
+
+
+}
+
+// Methods for Presenting in DashboardVC
+extension InformationView{
     func setup_btnRefreshDashboard(){
-//        if let btnRefreshDashboard = btnRefreshDashboard {
         btnRefreshDashboard.setTitle("Refresh Dashboard", for: .normal)
         btnRefreshDashboard.layer.borderColor = UIColor.systemBlue.cgColor
         btnRefreshDashboard.layer.borderWidth = 2
@@ -119,7 +124,6 @@ class InformationView: UIView {
         btnRefreshDashboard.layer.cornerRadius = 10
         btnRefreshDashboard.translatesAutoresizingMaskIntoConstraints = false
         btnRefreshDashboard.accessibilityIdentifier="btnRefreshDashboard"
-//        view.addSubview(btnRefreshDashboard)
         self.addSubview(btnRefreshDashboard)
         NSLayoutConstraint.activate([
             btnRefreshDashboard.topAnchor.constraint(equalTo: lblDescription.bottomAnchor, constant: heightFromPct(percent: 2)),
@@ -127,15 +131,10 @@ class InformationView: UIView {
             btnRefreshDashboard.widthAnchor.constraint(equalToConstant: widthFromPct(percent: 80)),
             btnRefreshDashboard.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
         ])
-        
         btnRefreshDashboard.addTarget(self, action: #selector(touchDown(_:)), for: .touchDown)
         btnRefreshDashboard.addTarget(self, action: #selector(touchUpInside(_:)), for: .touchUpInside)
-//        }
     }
     @objc func touchDown(_ sender: UIButton) {
-//        UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveEaseOut], animations: {
-//            sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-//        }, completion: nil)
         delegate?.touchDown(sender)
     }
     @objc func touchUpInside(_ sender: UIButton) {
@@ -143,22 +142,34 @@ class InformationView: UIView {
             sender.transform = .identity
         }, completion: nil)
         
-        print("🚀 referesh dashboard 🚀 🚀 🚀")
-        UserStore.shared.callSendDashboardTableObjects { resultJsonDict in
-            switch resultJsonDict{
-            case .success(_):
-                print("- we recieved data source and dashboard data")
+        print("- clicked referesh dashboard ")
+        UserStore.shared.callSendDashboardTableObjects { resultHasNewLastUpdateDate in
+            switch resultHasNewLastUpdateDate{
+            case let .success(hasNewLastUpdateDate):
+                
+                print("dashbaord callSendDashboardTableObjects is success 🎉")
+                if hasNewLastUpdateDate{
+                    print("Dashboard has new data 🚀 🚀 🚀")
+                    DispatchQueue.main.async {
+//                        self.delegate?.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
+                        self.delegate?.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: {
+                        self.delegate?.setupUserHasDashboard()
+                        })
+                    }
+                }
             case let .failure(userStoreError):
                 print("- failed to get data from send_both_data_source_and_dashboard_objects endpoint, error is: \(userStoreError.localizedDescription)")
+                self.delegate?.templateAlert(alertTitle: "No new data available", alertMessage: nil, completion: nil)
             }
         }
     }
-
 }
 
 protocol InformationViewDelegate: AnyObject {
     func touchDown(_ sender: UIButton)
     func update_arryDashboardTableObjects()
+    func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
+    func setupUserHasDashboard()
 }
 
 

@@ -56,7 +56,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             
         }
         
-
         if let user_vc = nav_vc.children[0] as? UserVC {
             user_vc.vwLocationDayWeather.setLocationSwitchBasedOnUserPermissions()
             user_vc.vwLocationDayWeather.setLocationSwitchLabelText()
@@ -85,6 +84,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
                 manage_data_vc.setupManageDataVcOffline()
             }
         }
+        
         if let dash_vc = nav_vc.children[0] as? DashboardVC {
             if UserStore.shared.arryDashboardTableObjects.count > 0{
                 dash_vc.setupUserHasDashboard()

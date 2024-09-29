@@ -93,24 +93,42 @@ class UserStore {
         UserDefaults.standard.removeObject(forKey: "lastUpdateTimestamp")
     }
     
-    func assignArryDataSourceObjects(jsonResponse:[String:Any]){
+    func assignArryDataSourceObjects(jsonResponse:[String:Any])->Bool{
         print("---- in assignArryDataSourceObjects() ")
-        
+        var hasNewLastUpdateDate = false
         if let unwp_array = jsonResponse["arryDataSourceObjects"] as? [[String: Any]] {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_data_source_obj = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
+                if let unwrapArray = self.arryDataSourceObjects{
+                    print("--------")
+                    print("Old arryDataSourceObjects:")
+                    print(self.arryDataSourceObjects)
+                    print("New unwrapArray")
+                    print(unwrapArray)
+                    print("--------")
+                    if array_data_source_obj[0].lastUpdate == self.arryDataSourceObjects?.first?.lastUpdate{
+//                    if array_data_source_obj[0].lastUpdate == unwrapArray[0].lastUpdate{
+                        hasNewLastUpdateDate=false
+                    } else {
+                        hasNewLastUpdateDate=true
+                    }
+                }
                 self.arryDataSourceObjects = array_data_source_obj
                 // Encode the array of DataSourceObject into Data
                 let encodedData = try JSONEncoder().encode(self.arryDataSourceObjects)
                 // Store the encoded Data in UserDefaults
                 UserDefaults.standard.set(encodedData, forKey: "arryDataSourceObjects")
                 print("--- successfully decodeed arryDataSourceObjects")
+                
+                return hasNewLastUpdateDate
             }
             catch {
                 print("failed to decode arryDataSourceObjects into [DataSourceObject]")
+                return hasNewLastUpdateDate
             }
         }
+        return hasNewLastUpdateDate
     }
     
     // offline mode
@@ -610,7 +628,6 @@ extension UserStore{
                 } else {
                     // Data is not in the expected format
                     DispatchQueue.main.async {
-                        //                        completion(.failure(URLError(.cannotParseResponse)))
                         completion(.failure(UserStoreError.generalError(URLError(.cannotParseResponse))))
                         print("- callDeleteUser: failure response: \(URLError(.cannotParseResponse))")
                     }
@@ -688,7 +705,8 @@ extension UserStore {
 /* Receive Apple Health Statistics from API */
 extension UserStore {
     
-    func callSendDashboardTableObjects(completion:@escaping(Result<[String:Any], UserStoreError>)->Void){
+    func callSendDashboardTableObjects(completion:@escaping(Result<Bool, UserStoreError>)->Void){
+        var hasNewLastUpdateDate = false
         let request = RequestStore.shared.createRequestWithToken(endpoint: .send_both_data_source_and_dashboard_objects)
         
         let task = RequestStore.shared.session.dataTask(with: request) { data, response, error in
@@ -702,10 +720,11 @@ extension UserStore {
             do {
                 // Convert the data to a dictionary
                 if let jsonResponse = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
+                    
                     self.assignUser(dictUser: jsonResponse)
                     self.assignArryDashboardTableObjects(jsonResponse: jsonResponse)
-                    self.assignArryDataSourceObjects(jsonResponse: jsonResponse)
-                    completion(.success(jsonResponse))
+                    hasNewLastUpdateDate = self.assignArryDataSourceObjects(jsonResponse: jsonResponse)
+                    completion(.success(hasNewLastUpdateDate))
                     // Now you can read values from jsonResponse using keys
                 }
             } catch{

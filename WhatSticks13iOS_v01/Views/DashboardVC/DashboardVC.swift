@@ -9,19 +9,19 @@ import UIKit
 
 class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegate,InformationViewDelegate {
     
-    var userStore:UserStore!
+//    var userStore:UserStore!
     let vwDashboardHeader = DashboardHeader()
     var tblDashboard:UITableView?
     var vwDashboardHasNoData = InformationView()
-
+    
     var refreshControlTblDashboard:UIRefreshControl?
     override func viewDidLoad() {
         super.viewDidLoad()
-        userStore = UserStore.shared
+//        userStore = UserStore.shared
         vwDashboardHeader.delegate = self
         
         setup_TopSafeBar()
-
+        
         navigationController?.setNavigationBarHidden(true, animated: false)// This seems to really hide the UINavigationBar
     }
     
@@ -63,7 +63,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         ])
     }
     func setup_tblDashboard(){
-
+        
         self.tblDashboard = UITableView()
         self.tblDashboard!.accessibilityIdentifier = "tblDashboard"
         self.tblDashboard!.translatesAutoresizingMaskIntoConstraints=false
@@ -85,38 +85,35 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         self.tblDashboard!.refreshControl = refreshControlTblDashboard!
     }
     
-    func updateDataSourceAndDashboardReferences(){
-        print("- in DashboardVC / updateDataSourceAndDashboardReferences() --")
-        print(userStore.arryDataSourceObjects)
-    }
-    
+    //    func updateDataSourceAndDashboardReferences(){
+    //        print("- in DashboardVC / updateDataSourceAndDashboardReferences() --")
+    //        print(userStore.arryDataSourceObjects)
+    //    }
+    //
     
     @objc private func touchUpInside_btnRefreshDashboard(_ sender: UIButton){
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
-//        self.update_arryDashboardTableObjects()
+        //        self.update_arryDashboardTableObjects()
         print("Check for User Dashboard data")
     }
     
     /* Protocol methods */
     func didSelectDashboard(currentDashboardObjPos:Int){
         print("- didSelectDashboard")
-        let dash_tab_obj = self.userStore.arryDashboardTableObjects[currentDashboardObjPos]
+        let dash_tab_obj = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos]
         print("-- > user selected \(currentDashboardObjPos) - \(dash_tab_obj.dependentVarName!)")
-        
         
         for i in dash_tab_obj.arryIndepVarObjects!{
             print("--- > Ind var name: \(i.independentVarName!), corr: \(i.correlationValue!)")
         }
-            
-
         
         DispatchQueue.main.async{
-            self.userStore.currentDashboardObjPos = currentDashboardObjPos
-            self.userStore.currentDashboardObject = self.userStore.arryDashboardTableObjects[currentDashboardObjPos]
+            UserStore.shared.currentDashboardObjPos = currentDashboardObjPos
+            UserStore.shared.currentDashboardObject = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos]
             print("-- > this should change here")
-            if let unwp_dashTitle = self.userStore.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
+            if let unwp_dashTitle = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
                 let btnTitle = " " + unwp_dashTitle + " "
                 self.vwDashboardHeader.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
             }
@@ -124,7 +121,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         }
     }
     
-
+    
     
     @objc func touchUpInside_btnSelectDashboards(_ sender: UIRefreshControl){
         print("present SelectDashboardVC")
@@ -138,21 +135,22 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         self.present(selectDashboardVC, animated: true, completion: nil)
     }
     
+    // This is for the title/name of the dashboard (NOT refresh button)
     func presentHeaderTitleInfo(){
         let title = UserStore.shared.currentDashboardObject?.dependentVarName
         let description = UserStore.shared.currentDashboardObject?.definition
-//        let vwInfo = InformationView(frame: CGRect.zero, title: title, description: description)
+        //        let vwInfo = InformationView(frame: CGRect.zero, title: title, description: description)
         let infoVC = InformationVC()
         infoVC.vwInformation.lblTitle.text = title
         infoVC.vwInformation.lblDescription.text = description
-//        infoVC.setup_btnRefreshDashboard()
+        //        infoVC.setup_btnRefreshDashboard()
         infoVC.modalPresentationStyle = .overCurrentContext
         infoVC.modalTransitionStyle = .crossDissolve
         self.present(infoVC, animated: true, completion: nil)
-
+        
     }
     
-
+    
 }
 
 
@@ -165,12 +163,52 @@ extension DashboardVC {
     
     
     func update_arryDashboardTableObjects(){
-        UserStore.shared.callSendDashboardTableObjects { resultDashTableObj in
-            switch resultDashTableObj{
-            case .success(_):
-                print("- Success: userStore.arryDashboardTableObjects updated with \(self.userStore.arryDashboardTableObjects.count) dash objects")
+        UserStore.shared.callSendDashboardTableObjects { resultHasNewLastUpdateDate in
+            switch resultHasNewLastUpdateDate{
+            case let .success(hasNewLastUpdateDate):
+                
+                if hasNewLastUpdateDate{
+                    DispatchQueue.main.async {
+                        self.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
+                    }
+                }
+                
+                
+//                if let arryDataSourceObjsArray = jsonDict["arryDataSourceObjects"] as? [[String: Any]] {
+//                    //                if let arryDataSourceObjs =  jsonDict["arryDataSourceObjects"] as? DataSourceObject{
+//                    do {
+//                        let jsonData = try JSONSerialization.data(withJSONObject: arryDataSourceObjsArray, options: [])
+//                        let arryDataSourceObjs = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
+//                        print("- got Object 🔥")
+//                        if let userStoreArryDataSourceObjs = UserStore.shared.arryDataSourceObjects{
+//                            print("-- unpacked optionals #1")
+//                            if arryDataSourceObjs[0].lastUpdate == userStoreArryDataSourceObjs[0].lastUpdate{
+//                                print("-- unpacked optionals #1 - lastUpdate are samsies -")
+//
+//                            } else {
+//                                DispatchQueue.main.async {
+//                                    self.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
+//                                }
+//                            }
+//                        }
+//                        else{
+//                            print("-- unpacked optionals #1 - lastUpdate are NOT samsies -")
+//                        }
+//                        print("-- Ended/After uppack sequence -")
+//                    }
+//                    
+//                    catch{
+//                        print("Failed to decode DataSourceObject: \(error)")
+//                        self.templateAlert(alertTitle: "No new data received", alertMessage: nil, completion: nil)
+//                    }
+//                }
+//                
+                
+                
+                
                 if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
                     DispatchQueue.main.async {
+                        print("- unwp_refreshControlTblDashboard.endRefreshing() ")
                         unwp_refreshControlTblDashboard.endRefreshing()
                     }
                 }
@@ -179,8 +217,7 @@ extension DashboardVC {
                         unwp_tblDashboard.reloadData()
                     }
                 }
-//                self.checkDashboardTableObjectNew()
-                self.updateDataSourceAndDashboardReferences()
+                print("- End of success update_arrayDAsh...")
             case let .failure(error):
                 print("failure: DashboardVC trying to update dashboard via func update_arryDashboardTableObjects; the error is \(error)")
                 if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
@@ -191,7 +228,7 @@ extension DashboardVC {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.templateAlert(alertTitle: "No Data Found Dashboard", alertMessage: "If you just added data, it could take a couple minutes to process. \n\nOtherwise try adding data.")
                 }
-
+                
             }
         }
     }
@@ -211,7 +248,7 @@ extension DashboardVC: UITableViewDelegate{
 
 extension DashboardVC: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let dashTableObj = self.userStore.currentDashboardObject else {
+        guard let dashTableObj = UserStore.shared.currentDashboardObject else {
             return 0
         }
         return dashTableObj.arryIndepVarObjects!.count
@@ -219,7 +256,7 @@ extension DashboardVC: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DashboardTableCell", for: indexPath) as! DashboardTableCell
-        guard let currentDashObj = userStore.currentDashboardObject,
+        guard let currentDashObj = UserStore.shared.currentDashboardObject,
               let arryIndepVarObjects = currentDashObj.arryIndepVarObjects,
               let unwpVerb = currentDashObj.verb else {return cell}
         
@@ -230,51 +267,4 @@ extension DashboardVC: UITableViewDataSource{
     }
     
 }
-
-
-
-//class DashboardVcNoDataView: UIView {
-//    let lblTitle = UILabel()
-//    let lblDescription = UILabel()
-//
-//    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        setupView()
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    func setupView(){
-//        self.backgroundColor = UIColor(named: "ColorTableTabModalBack")
-//        lblTitle.accessibilityIdentifier="lblTitle"
-//        lblTitle.text = "No Data"
-//        lblTitle.translatesAutoresizingMaskIntoConstraints=false
-//        lblTitle.font = UIFont(name: "ArialRoundedMTBold", size: 25)
-//        lblTitle.numberOfLines = 0
-//        self.addSubview(lblTitle)
-//        
-//        lblDescription.accessibilityIdentifier="lblDescription"
-//        lblDescription.text = "If you have not already sent data to analyze, go to Manage Data"
-//        lblDescription.translatesAutoresizingMaskIntoConstraints=false
-////        lblDescription.font = UIFont(name: "ArialRoundedMTBold", size: 25)
-//        lblDescription.numberOfLines = 0
-//        self.addSubview(lblDescription)
-//        
-//        NSLayoutConstraint.activate([
-//            lblTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: heightFromPct(percent: 3)),
-//            lblTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
-////            lblTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-//            
-//            lblDescription.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: heightFromPct(percent: 1)),
-//            lblDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
-//            lblDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
-//            
-//            lblDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
-//        ])
-//    }
-//}
-
 
