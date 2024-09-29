@@ -82,7 +82,14 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
 //        setup_UserVcAccountView()
         setupDatePicker()
         setup_btnSendData()
-        setup_btnDeleteData()
+        print("- ManageDataVC setupManageDataVcOnline() -")
+        print("UserStore.shared.arryaDataSourceObjects?: \(UserStore.shared.arryDataSourceObjects?.first)")
+        print(UserStore.shared.arryDataSourceObjects?.first?.recordCount)
+        if let recordCountString = UserStore.shared.arryDataSourceObjects?.first?.recordCount?.replacingOccurrences(of: ",", with: ""),
+           let recordCount = Int(recordCountString),
+           recordCount > 0 {
+            setup_btnDeleteData()
+        }
     }
     
     func setupManageDataVcHeaderView(){
@@ -317,7 +324,7 @@ extension ManageDataVC{
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 let formatted_qty_cat_and_workouts_count = formatWithCommas(number: qty_cat_and_workouts_count)
-                self.spinnerScreenLblMessage(message: "Sending Apple Health \(formatted_qty_cat_and_workouts_count) records to \nWhat Sticks API")
+                self.spinnerScreenLblMessage(message: "Preparing \(formatted_qty_cat_and_workouts_count) Apple Health records for analysis.")
             }
         }
         HealthDataStore.shared.callReceiveAppleWorkoutsData(userId: user_id,dateStringTimeStamp:dateStringTimeStamp, arryAppleWorkouts: arryWorkoutDict) { resultResponse in

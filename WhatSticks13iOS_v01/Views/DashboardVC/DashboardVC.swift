@@ -248,10 +248,11 @@ extension DashboardVC: UITableViewDelegate{
 
 extension DashboardVC: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let dashTableObj = UserStore.shared.currentDashboardObject else {
+        guard let dashTableObj = UserStore.shared.currentDashboardObject,
+              let unwp_arryIndepVarObj = dashTableObj.arryIndepVarObjects else {
             return 0
         }
-        return dashTableObj.arryIndepVarObjects!.count
+        return unwp_arryIndepVarObj.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

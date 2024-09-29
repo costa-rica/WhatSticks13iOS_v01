@@ -151,7 +151,7 @@ extension InformationView{
                 if hasNewLastUpdateDate{
                     print("Dashboard has new data 🚀 🚀 🚀")
                     DispatchQueue.main.async {
-//                        self.delegate?.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
+
                         self.delegate?.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: {
                         self.delegate?.setupUserHasDashboard()
                         })

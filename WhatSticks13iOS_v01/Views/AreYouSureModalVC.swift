@@ -224,7 +224,11 @@ class AreYouSureModalVC: TemplateVC {
             case let .success(stringDict):
                 print("- successfully deleted ")
                 UserStore.shared.deleteUserForManageDataVc()
-                
+//                self.delegate?.btnDeleteData.removeFromSuperview()
+                self.delegateManageDataVc?.btnDeleteData.removeFromSuperview()
+//                self.delegate?.vwUserStatus.btnRecordCountFilled.setTitle("0", for: .normal)
+                self.delegateManageDataVc?.vwManageDataVcHeader.btnRecordCountFilled.setTitle("0", for: .normal)
+                self.delegateManageDataVc?.vwManageDataVcHeader.btnEarliestDateFilled.setTitle("no data", for: .normal)
             case .failure(_):
                 print("- failed to delete user's apple health data from ManageDataVC/AreYouSureModalVC")
             }
@@ -249,6 +253,7 @@ protocol AreYouSureModalVcDelegate: AnyObject {
     func case_option_3_Online_and_custom_email()
     func case_option_4_Offline_and_custom_email()
     func manageUserVcOptionalViews()
+    
 }
 
 
@@ -259,4 +264,6 @@ protocol AreYouSureModalVcDelegateDeleteUserHealthData: AnyObject {
     func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func presentAlertController(_ alertController: UIAlertController)
     func touchDown(_ sender: UIButton)
+    var btnDeleteData: UIButton {get}
+    var vwManageDataVcHeader: ManageDataVcHeader {get}
 }

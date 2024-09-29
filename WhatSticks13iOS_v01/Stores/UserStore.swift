@@ -94,25 +94,22 @@ class UserStore {
     }
     
     func assignArryDataSourceObjects(jsonResponse:[String:Any])->Bool{
-        print("---- in assignArryDataSourceObjects() ")
+        print("* ---- in assignArryDataSourceObjects() ------ *")
         var hasNewLastUpdateDate = false
         if let unwp_array = jsonResponse["arryDataSourceObjects"] as? [[String: Any]] {
+            print("-- array with the lastUpdate element that we need to check --")
+            print(unwp_array)
+            print("--- self.arryDataSourceObjects ---")
+            print(self.arryDataSourceObjects)
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_data_source_obj = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
-                if let unwrapArray = self.arryDataSourceObjects{
-                    print("--------")
-                    print("Old arryDataSourceObjects:")
-                    print(self.arryDataSourceObjects)
-                    print("New unwrapArray")
-                    print(unwrapArray)
-                    print("--------")
-                    if array_data_source_obj[0].lastUpdate == self.arryDataSourceObjects?.first?.lastUpdate{
-//                    if array_data_source_obj[0].lastUpdate == unwrapArray[0].lastUpdate{
-                        hasNewLastUpdateDate=false
-                    } else {
-                        hasNewLastUpdateDate=true
-                    }
+                // if self.arryDataSourceObjects nil, then there is certainly an update i.e. hasNewLastUpdateDate = true
+                hasNewLastUpdateDate = self.arryDataSourceObjects == nil ? true : false
+                // next if self.arryDataSourceObjects was not nil but it's lastUpdate is different than the received lastUpdate then also an update i.e. hasNewLastUpdateDate = true
+                if let unwrapArray = self.arryDataSourceObjects,
+                   array_data_source_obj[0].lastUpdate != unwrapArray.first?.lastUpdate{
+                    hasNewLastUpdateDate=true
                 }
                 self.arryDataSourceObjects = array_data_source_obj
                 // Encode the array of DataSourceObject into Data
@@ -146,24 +143,31 @@ class UserStore {
         }
     }
     
-    func assignArryDashboardTableObjects(jsonResponse:[String:Any]){
+    func assignArryDashboardTableObjects(jsonResponse:[String:Any])  {
         print("---- in assignArryDashboardTableObjects() ")
         
         if let unwp_array = jsonResponse["arryDashboardTableObjects"] as? [[String: Any]] {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_dashboard_table_obj = try JSONDecoder().decode([DashboardTableObject].self, from: jsonData)
+                print("-- 🚀📈 recieved Dashboard Objects 🚀📈 --")
+                
                 self.arryDashboardTableObjects = array_dashboard_table_obj
                 self.currentDashboardObject = self.arryDashboardTableObjects[0]
                 // Encode the array of DataSourceObject into Data
                 let encodedData = try JSONEncoder().encode(self.arryDashboardTableObjects)
                 // Store the encoded Data in UserDefaults
                 UserDefaults.standard.set(encodedData, forKey: "arryDashboardTableObjects")
+                print(self.arryDashboardTableObjects)
+                print("-- 🚀📈 recieved Dashboard Objects 🚀📈 --")
+                
             }
             catch {
                 print("failed to decode arryDashboardTableObjects into [DashboardTableObject]")
+                
             }
         }
+        
     }
     
     // offline mode
@@ -183,7 +187,7 @@ class UserStore {
     }
     
     func assignUser(dictUser:[String:Any]){
-        print("---- in assignUser() ")
+//        print("---- in assignUser() ")
         do {
             if let userData = try? JSONSerialization.data(withJSONObject: dictUser["user"] ?? [:], options: []) {
                 
@@ -234,7 +238,6 @@ class UserStore {
     func connectDevice(completion: @escaping () -> Void){
         print("- in connectDevice(completion) ")
         if isGuestMode{
-            print("assign guest user and data")
             loadGuestUser()
             completion()
         } else {
@@ -260,7 +263,6 @@ class UserStore {
             else if UserDefaults.standard.string(forKey: "email") == nil || UserDefaults.standard.bool(forKey: "pendingEmailValidation")  {
                 self.user.username  = UserDefaults.standard.string(forKey: "userName")
                 // /login user
-//                if UserDefaults.standard.string(forKey: "userEmail") == nil {
                 callLoginGenericUser(user: self.user) { result_dict_string_any_or_error in
                     switch result_dict_string_any_or_error {
                     case  .success(_):
@@ -274,10 +276,6 @@ class UserStore {
                         completion()
                     }
                 }
-//                } else {
-//                    print("login real user")
-//                    completion()
-//                }
             }
             // Condition #3: Login with account
             else {
@@ -501,8 +499,8 @@ extension UserStore{
             }
             do {
                 if let jsonResult = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
-                    print("--- This should include a ArryDataSourceObjects ----")
-                    print("JSON dictionary: \(jsonResult)")
+//                    print("--- This should include a ArryDataSourceObjects ----")
+//                    print("JSON dictionary: \(jsonResult)")
                     self.assignUser(dictUser: jsonResult)
                     self.assignArryDataSourceObjects(jsonResponse: jsonResult)
                     self.assignArryDashboardTableObjects(jsonResponse: jsonResult)
@@ -646,7 +644,7 @@ extension UserStore{
 
 
 
-/* Good For now */
+/* Calls to: send user location .json */
 extension UserStore {
 
     func callUpdateUserLocationDetails(endPoint: EndPoint, sendUserLocations:Bool, completion: @escaping (Result<String,UserStoreError>) -> Void){
@@ -702,7 +700,7 @@ extension UserStore {
     }
 }
 
-/* Receive Apple Health Statistics from API */
+/* Call to: recieve Apple Health Statistics from API */
 extension UserStore {
     
     func callSendDashboardTableObjects(completion:@escaping(Result<Bool, UserStoreError>)->Void){
