@@ -16,6 +16,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
     
     var refreshControlTblDashboard:UIRefreshControl?
     override func viewDidLoad() {
+        print("* DashboardVC viewDidLoad *")
         super.viewDidLoad()
 //        userStore = UserStore.shared
         vwDashboardHeader.delegate = self

@@ -29,10 +29,7 @@ class UserVcOffline: UIView {
         setup_UserVcOfflineViews_lineOption()
         setup_UserVcOfflineViews()
     }
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        setup_UserVcOfflineViews()
-//    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

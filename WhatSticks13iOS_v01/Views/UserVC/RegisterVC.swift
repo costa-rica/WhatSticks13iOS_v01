@@ -243,6 +243,7 @@ protocol RegisterVcDelegate: AnyObject {
     func case_option_3_Online_and_custom_email()
     func case_option_4_Offline_and_custom_email()
     func manageUserVcOptionalViews()
+//    func New_manageUserVcOptionalViews()
 }
 
 

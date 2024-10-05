@@ -48,6 +48,7 @@
 		01D6FFF12C7DD06800087708 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFD12C7DD06800087708 /* UserStore.swift */; };
 		01D6FFF42C7DD07100087708 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FFF22C7DD07100087708 /* Config.swift */; };
 		01D6FFF52C7DD07100087708 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 01D6FFF32C7DD07100087708 /* README.md */; };
+		01E47FB82CB12A4B00CE393F /* UserVcOtherSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E47FB72CB12A4B00CE393F /* UserVcOtherSettings.swift */; };
 		4D37AFDF754291971A449781 /* Pods_WhatSticks13iOS_v01.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 276E92CE1356441A16EB2817 /* Pods_WhatSticks13iOS_v01.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,7 @@
 		01D6FFF22C7DD07100087708 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		01D6FFF32C7DD07100087708 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		01D6FFF62C7DD16100087708 /* WhatSticks13iOS_v01.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WhatSticks13iOS_v01.entitlements; sourceTree = "<group>"; };
+		01E47FB72CB12A4B00CE393F /* UserVcOtherSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVcOtherSettings.swift; sourceTree = "<group>"; };
 		113BC68344228CB5A327149C /* Pods-WhatSticks13iOS_v01.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatSticks13iOS_v01.debug.xcconfig"; path = "Target Support Files/Pods-WhatSticks13iOS_v01/Pods-WhatSticks13iOS_v01.debug.xcconfig"; sourceTree = "<group>"; };
 		276E92CE1356441A16EB2817 /* Pods_WhatSticks13iOS_v01.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhatSticks13iOS_v01.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDADEF472705258A0B40ECF5 /* Pods-WhatSticks13iOS_v01.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhatSticks13iOS_v01.release.xcconfig"; path = "Target Support Files/Pods-WhatSticks13iOS_v01/Pods-WhatSticks13iOS_v01.release.xcconfig"; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				01D6FFC32C7DD06800087708 /* UserVcLocationDayWeather.swift */,
 				01D6FFC42C7DD06800087708 /* UserVcOffline.swift */,
 				01D6FFC52C7DD06800087708 /* UserVcRegisterButton.swift */,
+				01E47FB72CB12A4B00CE393F /* UserVcOtherSettings.swift */,
 				01D6FFC62C7DD06800087708 /* UserVcUserStatusView.swift */,
 			);
 			path = UserVC;
@@ -423,6 +426,7 @@
 				01D6FFE52C7DD06800087708 /* UserVcLocationDayWeather.swift in Sources */,
 				01D6FFF42C7DD07100087708 /* Config.swift in Sources */,
 				01D6FFD52C7DD06800087708 /* AppleHealthDataFetcher.swift in Sources */,
+				01E47FB82CB12A4B00CE393F /* UserVcOtherSettings.swift in Sources */,
 				01D6FFDF2C7DD06800087708 /* ManageDataVC.swift in Sources */,
 				01D6FF922C7DCF6500087708 /* SceneDelegate.swift in Sources */,
 				01D6FFE72C7DD06800087708 /* UserVcRegisterButton.swift in Sources */,

@@ -9,6 +9,7 @@ import UIKit
 
 class TemplateVC: UIViewController {
     
+    let stckVwTop = UIStackView()
     let vwTopSafeBar = UIView()
     let vwTopBar = UIView()
 //    let lblScreenName = UILabel()
@@ -25,6 +26,7 @@ class TemplateVC: UIViewController {
     var isInitialViewController: Bool = false
      
     override func viewDidLoad() {
+        print("** TemplateVC viewDidLoad **")
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "ColorAppBackground")
         navigationController?.setNavigationBarHidden(true, animated: false)// This seems to really hide the UINavigationBar

@@ -99,7 +99,7 @@ class SelectAppModeVC: TemplateVC{
         
         vwSelectAppModeBackground.addSubview(btnGuest)
         vwSelectAppModeBackground.addSubview(btnProduction)
-        if URLStore.shared.apiBase != .prod {
+//        if URLStore.shared.apiBase != .prod {
             vwSelectAppModeBackground.addSubview(btnDevelopment)
             NSLayoutConstraint.activate([
                 lblSelectAppModeVcTitle.topAnchor.constraint(equalTo: vwSelectAppModeBackground.topAnchor,constant: heightFromPct(percent: 3)),
@@ -120,34 +120,26 @@ class SelectAppModeVC: TemplateVC{
                 btnDevelopment.bottomAnchor.constraint(equalTo: vwSelectAppModeBackground.bottomAnchor, constant: heightFromPct(percent: -5)),
                 
             ])
-        } else {
-            NSLayoutConstraint.activate([
-                lblSelectAppModeVcTitle.topAnchor.constraint(equalTo: vwSelectAppModeBackground.topAnchor,constant: heightFromPct(percent: 3)),
-                lblSelectAppModeVcTitle.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 1)),
-                
-                btnGuest.topAnchor.constraint(equalTo: lblSelectAppModeVcTitle.bottomAnchor, constant: heightFromPct(percent: 3)),
-                btnGuest.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 3)),
-                btnGuest.trailingAnchor.constraint(equalTo: vwSelectAppModeBackground.trailingAnchor, constant: widthFromPct(percent: -3)),
-                
-                btnProduction.topAnchor.constraint(equalTo: btnGuest.bottomAnchor, constant: heightFromPct(percent: 3)),
-                btnProduction.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 3)),
-                btnProduction.trailingAnchor.constraint(equalTo: vwSelectAppModeBackground.trailingAnchor, constant: widthFromPct(percent: -3)),
-                
-                btnProduction.bottomAnchor.constraint(equalTo: vwSelectAppModeBackground.bottomAnchor, constant: heightFromPct(percent: -5)),
-                
-            ])
-        }
+//        } 
+//        else {
+//            NSLayoutConstraint.activate([
+//                lblSelectAppModeVcTitle.topAnchor.constraint(equalTo: vwSelectAppModeBackground.topAnchor,constant: heightFromPct(percent: 3)),
+//                lblSelectAppModeVcTitle.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 1)),
+//                
+//                btnGuest.topAnchor.constraint(equalTo: lblSelectAppModeVcTitle.bottomAnchor, constant: heightFromPct(percent: 3)),
+//                btnGuest.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 3)),
+//                btnGuest.trailingAnchor.constraint(equalTo: vwSelectAppModeBackground.trailingAnchor, constant: widthFromPct(percent: -3)),
+//                
+//                btnProduction.topAnchor.constraint(equalTo: btnGuest.bottomAnchor, constant: heightFromPct(percent: 3)),
+//                btnProduction.leadingAnchor.constraint(equalTo: vwSelectAppModeBackground.leadingAnchor, constant: widthFromPct(percent: 3)),
+//                btnProduction.trailingAnchor.constraint(equalTo: vwSelectAppModeBackground.trailingAnchor, constant: widthFromPct(percent: -3)),
+//                
+//                btnProduction.bottomAnchor.constraint(equalTo: vwSelectAppModeBackground.bottomAnchor, constant: heightFromPct(percent: -5)),
+//                
+//            ])
+//        }
     }
     
-//    private func addTapGestureRecognizer() {
-//        // Create a tap gesture recognizer
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-//        // Add the gesture recognizer to the view
-//        view.addGestureRecognizer(tapGesture)
-//    }
-//    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-//            dismiss(animated: true, completion: nil)
-//    }
     
     @objc private func touchUpInsideGuest() {
         delegate?.touchUpInsideGuest(btnGuest)

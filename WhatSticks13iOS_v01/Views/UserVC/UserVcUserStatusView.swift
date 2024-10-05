@@ -9,7 +9,7 @@ import UIKit
 
 class UserVcUserStatusView: UIView {
     
-    var showLine:Bool!
+//    var showLine:Bool!
     let vwUserStatusLine = UIView()
     var viewTopAnchor:NSLayoutAnchor<NSLayoutYAxisAnchor>!
     
@@ -26,23 +26,23 @@ class UserVcUserStatusView: UIView {
     let lblRecordCount = UILabel()
     let btnRecordCountFilled = UIButton()
     
-    var constraints_NO_VwRegisterButton = [NSLayoutConstraint]()
+//    var constraints_NO_VwRegisterButton = [NSLayoutConstraint]()
     
-    let vwRegisterButton = UserVcRegisterButton()
-    var constraints_YES_VwRegisterButton = [NSLayoutConstraint]()
+//    let vwRegisterButton = UserVcRegisterButton()
+//    var constraints_YES_VwRegisterButton = [NSLayoutConstraint]()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.showLine = false
-        setup_UserVcAccountView()
-    }
-    init(frame: CGRect, showLine: Bool) {
-        self.showLine = showLine
-        super.init(frame: frame)
         setup_UserVcAccountView_lineOption()
         setup_UserVcAccountView()
     }
+//    init(frame: CGRect, showLine: Bool) {
+//        self.showLine = showLine
+//        super.init(frame: frame)
+//        setup_UserVcAccountView_lineOption()
+//        setup_UserVcAccountView()
+//    }
 //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
 //        setup_UserVcAccountView()
@@ -147,14 +147,14 @@ class UserVcUserStatusView: UIView {
         
         self.addSubview(stckVwUser)
         
-        if showLine{
-            viewTopAnchor = vwUserStatusLine.bottomAnchor
-        } else {
-            viewTopAnchor = self.topAnchor
-        }
-        
+//        if showLine{
+//            viewTopAnchor = vwUserStatusLine.bottomAnchor
+//        } else {
+//            viewTopAnchor = self.topAnchor
+//        }
+//        
         NSLayoutConstraint.activate([
-            lblTitleUserStatus.topAnchor.constraint(equalTo: viewTopAnchor, constant: heightFromPct(percent: 3)),
+            lblTitleUserStatus.topAnchor.constraint(equalTo: self.topAnchor, constant: heightFromPct(percent: 3)),
             lblTitleUserStatus.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: 2)),
             lblTitleUserStatus.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
             
@@ -162,19 +162,21 @@ class UserVcUserStatusView: UIView {
             stckVwUser.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -1)),
             stckVwUser.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 3)),
             
+            stckVwUser.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -3)),
+            
             btnUsernameFilled.widthAnchor.constraint(lessThanOrEqualTo: btnRecordCountFilled.widthAnchor)
         ])
         
         
-        constraints_NO_VwRegisterButton = [
-            stckVwUser.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -3)),
-        ]
-        constraints_YES_VwRegisterButton = [
-            vwRegisterButton.topAnchor.constraint(equalTo: stckVwUser.bottomAnchor, constant: heightFromPct(percent: 2)),
-            vwRegisterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
-            vwRegisterButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
-            vwRegisterButton.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -3)),
-        ]
+//        constraints_NO_VwRegisterButton = [
+//            stckVwUser.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -3)),
+//        ]
+//        constraints_YES_VwRegisterButton = [
+//            vwRegisterButton.topAnchor.constraint(equalTo: stckVwUser.bottomAnchor, constant: heightFromPct(percent: 2)),
+//            vwRegisterButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
+//            vwRegisterButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
+//            vwRegisterButton.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -3)),
+//        ]
         
         //        if userStore.user.email != nil {
         //            vwRegisterButton.removeFromSuperview()
@@ -185,21 +187,21 @@ class UserVcUserStatusView: UIView {
         
     }
     
-    func setup_vcRegistrationButton(){
-        vwRegisterButton.accessibilityIdentifier = "vwRegisterButton"
-        vwRegisterButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.deactivate(constraints_NO_VwRegisterButton)
-        self.addSubview(vwRegisterButton)
-        btnUsernameFilled.setTitle(userStore.user.username, for: .normal)
-        NSLayoutConstraint.activate(constraints_YES_VwRegisterButton)
-    }
-    
-    func remove_vcRegistrationButton(){
-        NSLayoutConstraint.deactivate(constraints_YES_VwRegisterButton)
-        vwRegisterButton.removeFromSuperview()
-        btnUsernameFilled.setTitle(userStore.user.username, for: .normal)
-        NSLayoutConstraint.activate(constraints_NO_VwRegisterButton)
-    }
+//    func setup_vcRegistrationButton(){
+//        vwRegisterButton.accessibilityIdentifier = "vwRegisterButton"
+//        vwRegisterButton.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.deactivate(constraints_NO_VwRegisterButton)
+//        self.addSubview(vwRegisterButton)
+//        btnUsernameFilled.setTitle(userStore.user.username, for: .normal)
+//        NSLayoutConstraint.activate(constraints_YES_VwRegisterButton)
+//    }
+//    
+//    func remove_vcRegistrationButton(){
+//        NSLayoutConstraint.deactivate(constraints_YES_VwRegisterButton)
+//        vwRegisterButton.removeFromSuperview()
+//        btnUsernameFilled.setTitle(userStore.user.username, for: .normal)
+//        NSLayoutConstraint.activate(constraints_NO_VwRegisterButton)
+//    }
     
     
     

@@ -49,6 +49,7 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
     var btnDeleteData = UIButton()
     
     override func viewDidLoad() {
+        print("* ManageDataVC viewDidLoad *")
 //        userStore = UserStore.shared
         if !UserStore.shared.isGuestMode{
             print("- prompting for authorizeHealthKit() ")
