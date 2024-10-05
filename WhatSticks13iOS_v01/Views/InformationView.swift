@@ -156,6 +156,10 @@ extension InformationView{
                         self.delegate?.setupUserHasDashboard()
                         })
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        self.delegate?.templateAlert(alertTitle: "No new data", alertMessage: "", completion: nil)
+                    }
                 }
             case let .failure(userStoreError):
                 print("- failed to get data from send_both_data_source_and_dashboard_objects endpoint, error is: \(userStoreError.localizedDescription)")

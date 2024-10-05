@@ -18,11 +18,8 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
     override func viewDidLoad() {
         print("* DashboardVC viewDidLoad *")
         super.viewDidLoad()
-//        userStore = UserStore.shared
         vwDashboardHeader.delegate = self
-        
         setup_TopSafeBar()
-        
         navigationController?.setNavigationBarHidden(true, animated: false)// This seems to really hide the UINavigationBar
     }
     
@@ -86,11 +83,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         self.tblDashboard!.refreshControl = refreshControlTblDashboard!
     }
     
-    //    func updateDataSourceAndDashboardReferences(){
-    //        print("- in DashboardVC / updateDataSourceAndDashboardReferences() --")
-    //        print(userStore.arryDataSourceObjects)
-    //    }
-    //
+
     
     @objc private func touchUpInside_btnRefreshDashboard(_ sender: UIButton){
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {

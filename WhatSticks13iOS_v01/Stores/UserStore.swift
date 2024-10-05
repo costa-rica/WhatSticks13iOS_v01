@@ -97,10 +97,8 @@ class UserStore {
         print("* ---- in assignArryDataSourceObjects() ------ *")
         var hasNewLastUpdateDate = false
         if let unwp_array = jsonResponse["arryDataSourceObjects"] as? [[String: Any]] {
-            print("-- array with the lastUpdate element that we need to check --")
-            print(unwp_array)
-            print("--- self.arryDataSourceObjects ---")
-            print(self.arryDataSourceObjects)
+//            print("-- array with the lastUpdate element that we need to check --")
+
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_data_source_obj = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
@@ -150,7 +148,6 @@ class UserStore {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: unwp_array, options: [])
                 let array_dashboard_table_obj = try JSONDecoder().decode([DashboardTableObject].self, from: jsonData)
-                print("-- 🚀📈 recieved Dashboard Objects 🚀📈 --")
                 
                 self.arryDashboardTableObjects = array_dashboard_table_obj
                 self.currentDashboardObject = self.arryDashboardTableObjects[0]
@@ -158,9 +155,6 @@ class UserStore {
                 let encodedData = try JSONEncoder().encode(self.arryDashboardTableObjects)
                 // Store the encoded Data in UserDefaults
                 UserDefaults.standard.set(encodedData, forKey: "arryDashboardTableObjects")
-                print(self.arryDashboardTableObjects)
-                print("-- 🚀📈 recieved Dashboard Objects 🚀📈 --")
-                
             }
             catch {
                 print("failed to decode arryDashboardTableObjects into [DashboardTableObject]")
@@ -187,7 +181,7 @@ class UserStore {
     }
     
     func assignUser(dictUser:[String:Any]){
-//        print("---- in assignUser() ")
+        print("---- in assignUser() ")
         do {
             if let userData = try? JSONSerialization.data(withJSONObject: dictUser["user"] ?? [:], options: []) {
                 
@@ -220,6 +214,7 @@ class UserStore {
         }
     }
     func checkUser(){
+        print("-> in UserStore.checkUser 👀")
         if UserDefaults.standard.string(forKey: "userName") == nil || UserDefaults.standard.string(forKey: "userName") == "new_user"  {
             deleteUserDefaults_User()
             self.user.username = "new_user"
@@ -236,7 +231,7 @@ class UserStore {
     }
     
     func connectDevice(completion: @escaping () -> Void){
-        print("- in connectDevice(completion) ")
+        print("- in connectDevice(completion) 📲")
         if isGuestMode{
             loadGuestUser()
             completion()

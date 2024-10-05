@@ -9,7 +9,7 @@ import UIKit
 
 class UserVcOtherSettings: UIView {
     
-//    weak var delegate: UserVcRegisterButtonDelegate?
+    weak var delegate: UserVcOtherSettingsDelegate?
     let vwLine = UIView()
     let lblTitle = UILabel()
     let lblDescription = UILabel()
@@ -33,8 +33,6 @@ class UserVcOtherSettings: UIView {
         vwLine.translatesAutoresizingMaskIntoConstraints = false
         vwLine.backgroundColor = UIColor(named: "lineColor")
         self.addSubview(vwLine)
-       
-        
         
         lblTitle.accessibilityIdentifier="lblTitle-UserVcOtherSettings"
         lblTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -42,16 +40,7 @@ class UserVcOtherSettings: UIView {
         lblTitle.font = UIFont(name: "ArialRoundedMTBold", size: 25)
         lblTitle.numberOfLines=0
         self.addSubview(lblTitle)
-        
-//        lblDescription.accessibilityIdentifier="lblDescription-UserVcOtherSettings"
-//        lblDescription.translatesAutoresizingMaskIntoConstraints=false
-//        let text_for_message = "Go to Settings > Health > Data Access & Devices > WhatSticks to grant access.\n\nFor this app to work properly please make sure all data types are allowed."
-//        lblDescription.text = text_for_message
-//        lblDescription.numberOfLines = 0
-//        self.addSubview(lblDescription)
-        
-        
-        
+                
         stckVwGuestOption.accessibilityIdentifier="stckVwGuestOption"
         stckVwGuestOption.translatesAutoresizingMaskIntoConstraints=false
         stckVwGuestOption.spacing = 5
@@ -63,16 +52,20 @@ class UserVcOtherSettings: UIView {
         lblGuestOption.text = "Show guest option on launch:"
         stckVwGuestOption.addArrangedSubview(lblGuestOption)
         
-//        swtchLocTrackReoccurring.accessibilityIdentifier = "swtchLocationDayWeather"
-//        swtchLocTrackReoccurring.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
-        
         stckVwGuestOption.addArrangedSubview(swtchGuestOption)
-        
-        
         swtchGuestOption.accessibilityIdentifier = "swtchGuestOption"
         swtchGuestOption.addTarget(self, action: #selector(swtchGuestOptionValueChanged(_:)), for: .valueChanged)
         
         
+        // Retrieve the value from UserDefaults
+        if let showGuestModeOption = UserDefaults.standard.value(forKey: "showGuestModeOption") as? Bool {
+            // If the value exists, set the switch accordingly
+            swtchGuestOption.isOn = showGuestModeOption
+        } else {
+            // If the value doesn't exist, set the switch to on and save this initial state
+            swtchGuestOption.isOn = true
+            UserDefaults.standard.set(true, forKey: "showGuestModeOption")
+        }
         
         NSLayoutConstraint.activate([
             
@@ -89,17 +82,25 @@ class UserVcOtherSettings: UIView {
             stckVwGuestOption.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 2)),
             stckVwGuestOption.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
             stckVwGuestOption.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -3))
-//            lblDescription.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: heightFromPct(percent: 2)),
-//            lblDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: -2)),
-//            lblDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: widthFromPct(percent: 3)),
-//            lblDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: heightFromPct(percent: -5))
         ])
     }
     
     
     @objc func swtchGuestOptionValueChanged(_ sender: UISwitch) {
         print("- in swtchGuestOptionValueChanged 🙋🏻")
-//        delegate?.showSpinner()
+        if UserStore.shared.isGuestMode{
+            print("- UserVCOtherSEttings > swtchGuestOptionValueChanged > if UserStore.shared.isGuestMode{")
+            self.delegate?.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️", completion: {
+                self.swtchGuestOption.isOn=true
+            })
+        } else {
+            UserDefaults.standard.set(sender.isOn, forKey: "showGuestModeOption")
+        }
     }
     
+}
+
+protocol UserVcOtherSettingsDelegate: AnyObject {
+    func templateAlert(alertTitle:String?,alertMessage: String?, completion:(()->Void)?)
+
 }

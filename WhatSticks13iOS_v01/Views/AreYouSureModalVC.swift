@@ -204,9 +204,12 @@ class AreYouSureModalVC: TemplateVC {
         
         print("Delete User Apple Health 🍏🍎 data")
         showSpinner()
+        if !UserStore.shared.isGuestMode {
+            
+        
         HealthDataStore.shared.callDeleteAppleHealthData { resultStringDict in
             switch resultStringDict{
-            case let .success(stringDict):
+            case .success(_):
                 print("- successfully deleted ")
                 UserStore.shared.deleteUserForManageDataVc()
 //                self.delegate?.btnDeleteData.removeFromSuperview()
@@ -214,10 +217,16 @@ class AreYouSureModalVC: TemplateVC {
 //                self.delegate?.vwUserStatus.btnRecordCountFilled.setTitle("0", for: .normal)
                 self.delegateManageDataVc?.vwManageDataVcHeader.btnRecordCountFilled.setTitle("0", for: .normal)
                 self.delegateManageDataVc?.vwManageDataVcHeader.btnEarliestDateFilled.setTitle("no data", for: .normal)
+                self.dismiss(animated: true, completion: nil)
             case .failure(_):
                 print("- failed to delete user's apple health data from ManageDataVC/AreYouSureModalVC")
             }
             self.removeSpinner()
+        }
+        } else {
+            self.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️") {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

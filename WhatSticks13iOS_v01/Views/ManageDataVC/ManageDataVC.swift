@@ -83,9 +83,9 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
 //        setup_UserVcAccountView()
         setupDatePicker()
         setup_btnSendData()
-        print("- ManageDataVC setupManageDataVcOnline() -")
-        print("UserStore.shared.arryaDataSourceObjects?: \(UserStore.shared.arryDataSourceObjects?.first)")
-        print(UserStore.shared.arryDataSourceObjects?.first?.recordCount)
+//        print("- ManageDataVC setupManageDataVcOnline() -")
+//        print("UserStore.shared.arryaDataSourceObjects?: \(UserStore.shared.arryDataSourceObjects?.first)")
+//        print(UserStore.shared.arryDataSourceObjects?.first?.recordCount)
         if let recordCountString = UserStore.shared.arryDataSourceObjects?.first?.recordCount?.replacingOccurrences(of: ",", with: ""),
            let recordCount = Int(recordCountString),
            recordCount > 0 {
@@ -160,13 +160,10 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
             sender.transform = .identity
         }, completion: nil)
         print(" send data")
-        if UserStore.shared.isGuestMode{
-            let informationVc = InformationVC()
-            informationVc.vwInformation.lblTitle.text = "Guest Mode"
-            informationVc.vwInformation.lblDescription.text = "While in guest mode user's cannot send data. \n\n If you would like to analyze your data please close the app and restart in Normal mode."
-            informationVc.modalPresentationStyle = .overCurrentContext
-            informationVc.modalTransitionStyle = .crossDissolve
-            self.presentNewView(informationVc)
+        if UserStore.shared.isGuestMode{           
+            self.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️") {
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         else {
             dtUserHistory = datePicker.date

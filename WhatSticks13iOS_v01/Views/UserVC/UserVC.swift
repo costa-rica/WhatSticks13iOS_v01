@@ -9,7 +9,7 @@ import UIKit
 
 //class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate, UserVcOfflineDelegate, UserVcRegisterButtonDelegate, UserVcDeleteDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserStatusDevelopmentViewDelegate{
 
-class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButtonDelegate, UserVcDeleteDelegate, UserStatusDevelopmentViewDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate{
+class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButtonDelegate, UserVcDeleteDelegate, UserStatusDevelopmentViewDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserVcOtherSettingsDelegate{
     
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -42,18 +42,23 @@ class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButto
         vwRegisterButton.delegate = self
         vwLocationDayWeather.delegate = self
         vwUserDeleteAccount.delegate = self
+        vwOtherSettings.delegate = self
         
         self.setup_TopSafeBar()
         setupScrollView()
         setupContentView()
         setupStackView()
+        
+        print("--->>>> what is UserStore.shared.isOnline: \(UserStore.shared.isOnline)")
+        print("--->>>> what is UserStore.shared.isGuestMode: \(UserStore.shared.isGuestMode)")
     }
     
 
     // Method to add a new view to the stackView
     func addView(_ newView: UIView) {
-        var viewsCount = stackView.subviews.count
-        stackView.insertArrangedSubview(newView, at: viewsCount)
+//        var viewsCount = stackView.subviews.count
+//        stackView.insertArrangedSubview(newView, at: viewsCount)
+        stackView.addArrangedSubview(newView)
     }
     
     // Method to remove a view from the stackView
@@ -80,7 +85,7 @@ extension UserVC {
         }
         
         // vwOffline
-        if !UserStore.shared.isOnline{
+        if !UserStore.shared.isOnline && !UserStore.shared.isGuestMode{
             addView(vwOffline)
         } else {
             removeView(vwOffline)

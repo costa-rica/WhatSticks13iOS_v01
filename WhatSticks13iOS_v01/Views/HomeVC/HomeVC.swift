@@ -28,19 +28,7 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
 
 
     }
-    override func viewIsAppearing(_ animated: Bool) {
-//        print("- HomeVc viewIsAppearing")
-        if !didPresentAppModeOption{
-            // deactivate Tab Bar items while present
-            tabBarController?.tabBar.isUserInteractionEnabled = false
-            selectAppModeVc.delegate = self
-            selectAppModeVc.modalPresentationStyle = .overCurrentContext
-            selectAppModeVc.modalTransitionStyle = .crossDissolve
-            self.present(selectAppModeVc, animated: true, completion: nil)
-            self.didPresentAppModeOption = true
-            
-        }
-    }
+    
     
     //    override func view
     func setupHomeVcHeader(){
@@ -53,6 +41,16 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
             vwHomeVcHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             vwHomeVcHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
+    }
+    
+    func presentAppModeOption(){
+        // deactivate Tab Bar items while present
+        tabBarController?.tabBar.isUserInteractionEnabled = false
+        selectAppModeVc.delegate = self
+        selectAppModeVc.modalPresentationStyle = .overCurrentContext
+        selectAppModeVc.modalTransitionStyle = .crossDissolve
+        self.present(selectAppModeVc, animated: true, completion: nil)
+        self.didPresentAppModeOption = true
     }
     
     @objc func touchUpInsideGuest(_ sender: UIButton) {
@@ -109,3 +107,74 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
     }
 }
 
+extension HomeVC {
+    override func viewIsAppearing(_ animated: Bool) {
+        print("- HomeVc viewIsAppearing 🏡")
+        if !didPresentAppModeOption {
+            didPresentAppModeOption = true
+            guard let showGuestModeOption = UserDefaults.standard.value(forKey: "showGuestModeOption") as? Bool else {
+                presentAppModeOption()
+                return
+            }
+            
+            if showGuestModeOption {
+                presentAppModeOption()
+            } else {
+                handleNormalMode()
+            }
+        }
+    }
+
+    private func handleNormalMode() {
+        print("---> Normal Mode with no SelectModeModal presented")
+        self.showSpinner()
+        tabBarController?.tabBar.isUserInteractionEnabled = true
+        self.setupNonNormalMode()
+        UserStore.shared.connectDevice {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+    }
+}
+
+// OBE
+extension HomeVC {
+    
+    
+    
+//    override func viewIsAppearing(_ animated: Bool) {
+//        print("- HomeVc viewIsAppearing 🏡")
+//        if let showGuestModeOption = UserDefaults.standard.value(forKey: "showGuestModeOption") as? Bool {
+//            print("--> found UserDefaults.standard.value(forKey: showGuestModeOption)")
+//            if showGuestModeOption {
+//                presentAppModeOption()
+//            } else {
+//                print("---> Normal Mode with no SelectModeModal presented #2")
+//                self.showSpinner()
+//                tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
+//                self.setupNonNormalMode()
+//                UserStore.shared.connectDevice {
+//                    DispatchQueue.main.async {
+//    //                    self.selectAppModeVc.dismiss(animated: true)
+//                        self.removeSpinner()
+//                    }
+//                }
+//            }
+//        } else if !didPresentAppModeOption {
+//            print("--> else if !didPresentAppModeOption {")
+//            presentAppModeOption()
+//        } else {
+//            print("---> Normal Mode with no SelectModeModal presented")
+//            self.showSpinner()
+//            tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
+//            self.setupNonNormalMode()
+//            UserStore.shared.connectDevice {
+//                DispatchQueue.main.async {
+////                    self.selectAppModeVc.dismiss(animated: true)
+//                    self.removeSpinner()
+//                }
+//            }
+//        }
+//    }
+}
