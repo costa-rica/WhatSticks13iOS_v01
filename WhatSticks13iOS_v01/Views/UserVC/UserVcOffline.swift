@@ -119,17 +119,19 @@ class UserVcOffline: UIView {
         delegate?.showSpinner()
         userStore.connectDevice {
             OperationQueue.main.addOperation {
-                if !self.userStore.isOnline, self.userStore.user.email == nil {
-                    self.delegate?.case_option_1_Offline_and_generic_name()
-                    self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-                }else if self.userStore.isOnline, self.userStore.user.email == nil{
-                    print("UserVC offline connected!!! --")
-                    self.delegate?.case_option_2_Online_and_generic_name()
-                } else if self.userStore.isOnline, self.userStore.user.email != nil{
-                    self.delegate?.case_option_3_Online_and_custom_email()
-                } else if !self.userStore.isOnline, self.userStore.user.email != nil {
-                    self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-                    self.delegate?.case_option_4_Offline_and_custom_email()
+                if self.userStore.isOnline{
+                    self.delegate?.templateAlert(alertTitle: "We're back online 📡", alertMessage: "", completion: {
+                        self.delegate?.manageUserVcOptionalViews()
+                        self.delegate?.removeSpinner()
+                        
+                    })
+                }else {
+
+                    self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", completion: {
+                        self.delegate?.manageUserVcOptionalViews()
+                        self.delegate?.removeSpinner()
+                        
+                    })
                 }
                 self.delegate?.removeSpinner()
             }
@@ -142,11 +144,8 @@ class UserVcOffline: UIView {
 protocol UserVcOfflineDelegate: AnyObject {
     func removeSpinner()
     func showSpinner()
-    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
+    func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func presentAlertController(_ alertController: UIAlertController)
     func touchDown(_ sender: UIButton)
-    func case_option_1_Offline_and_generic_name()
-    func case_option_2_Online_and_generic_name()
-    func case_option_3_Online_and_custom_email()
-    func case_option_4_Offline_and_custom_email()
+    func manageUserVcOptionalViews()
 }

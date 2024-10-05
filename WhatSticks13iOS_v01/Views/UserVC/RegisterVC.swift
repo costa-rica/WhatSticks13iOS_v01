@@ -150,14 +150,18 @@ class RegisterVC: TemplateVC, UITextFieldDelegate {
                     case let .success(dictString):
 //                        print("successful response: \(dictString)")
                         OperationQueue.main.addOperation {
+                            print("- RegisterVC #1")
                             self.delegate?.removeSpinner()
                             if !UserStore.shared.isOnline{
+                                print("- RegisterVC #2")
                                 self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", completion: {
                                     
                                     self.delegate?.manageUserVcOptionalViews()
                                     self.dismiss(animated: true, completion: nil)
+                                    print("RegisterVC: should have dismissed self: 🚨📢🔔⚠️")
                                 })
                             } else {
+                                print("- RegisterVC #3")
                                 if let unwp_title = dictString["alert_title"], let unwp_alert = dictString["alert_message"]{
                                     self.delegate?.templateAlert(alertTitle: unwp_title, alertMessage: unwp_alert, completion: {
                                         
@@ -165,12 +169,13 @@ class RegisterVC: TemplateVC, UITextFieldDelegate {
                                         UserDefaults.standard.set(email, forKey: "email")
                                         UserDefaults.standard.set(true, forKey: "pendingEmailValidation")
                                         self.dismiss(animated: true, completion: nil)
+                                        print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
                                     })
                                 } else {
+                                    print("- RegisterVC #4")
                                     self.delegate?.templateAlert(alertTitle: "Error", alertMessage: "Bad response from WS server", completion: {
-                                        
-//                                        self.delegate?.manageUserVcOptionalViews()
                                         self.dismiss(animated: true, completion: nil)
+                                        print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
                                     })
                                 }
 
@@ -178,18 +183,24 @@ class RegisterVC: TemplateVC, UITextFieldDelegate {
                         }
                         
                     case .failure(_):
+                        print("- RegisterVC #5")
                         self.delegate?.templateAlert(alertTitle: "Unsuccsessful :/", alertMessage: "", completion: nil)
                     }
+                    print("- RegisterVC #6")
                     self.removeSpinner()
                 }
-                
+                print("- RegisterVC #7")
                 
             } else {
+                print("- RegisterVC #8")
                 self.delegate?.templateAlert(alertTitle: "Must have password", alertMessage: "", completion: nil)
+                
             }
         } else {
+            print("- RegisterVC #9")
             self.delegate?.templateAlert(alertTitle: "Must valid have email", alertMessage: "", completion: nil)
         }
+        print("- RegisterVC #10")
     }
     
     private func addTapGestureRecognizer() {
@@ -238,10 +249,6 @@ protocol RegisterVcDelegate: AnyObject {
     func touchDown(_ sender: UIButton)
     func presentNewView(_ uiViewController: UIViewController)
     var vwUserStatus: UserVcUserStatusView {get}
-    func case_option_1_Offline_and_generic_name()
-    func case_option_2_Online_and_generic_name()
-    func case_option_3_Online_and_custom_email()
-    func case_option_4_Offline_and_custom_email()
     func manageUserVcOptionalViews()
 //    func New_manageUserVcOptionalViews()
 }

@@ -59,7 +59,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         if let user_vc = nav_vc.children[0] as? UserVC {
             user_vc.vwLocationDayWeather.setLocationSwitchBasedOnUserPermissions()
             user_vc.vwLocationDayWeather.setLocationSwitchLabelText()
-            print("----> how many children in UserVC: \(user_vc.view.subviews.count)")
             
             if let unwp_username = UserStore.shared.user.username{
                 user_vc.vwUserStatus.btnUsernameFilled.setTitle(unwp_username, for: .normal)
@@ -71,7 +70,6 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             }
             
             if user_vc.view.subviews.count > 0 {
-//                user_vc.manageUserVcOptionalViews()
                 user_vc.manageUserVcOptionalViews()
             }
             

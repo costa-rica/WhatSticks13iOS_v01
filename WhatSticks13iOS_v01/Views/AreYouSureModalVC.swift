@@ -122,49 +122,36 @@ class AreYouSureModalVC: TemplateVC {
                 self.delegate?.vwLocationDayWeather.setLocationSwitchLabelText()
                 UserStore.shared.deletedUser()
                 OperationQueue.main.addOperation {
+                    print("- AreYouSureModalVC #1")
                     self.delegate?.removeSpinner()
                     if !UserStore.shared.isOnline{
+                        print("- AreYouSureModalVC #2")
                         self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", completion: {
                             
                             self.delegate?.manageUserVcOptionalViews()
                             self.dismiss(animated: true, completion: nil)
+                            print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
                         })
                     } else {
+                        print("- AreYouSureModalVC #3")
                         self.delegate?.templateAlert(alertTitle: "Success!", alertMessage: "", completion: {
                             
                             self.delegate?.manageUserVcOptionalViews()
                             self.dismiss(animated: true, completion: nil)
+                            print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
                         })
-
                     }
-//                    if !UserStore.shared.isOnline, UserStore.shared.user.email == nil {
-//                        self.delegate?.case_option_1_Offline_and_generic_name()
-//                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-//                    }else if UserStore.shared.isOnline, UserStore.shared.user.email == nil{
-//                        print("UserVC offline connected!!! --")
-//                        self.delegate?.case_option_2_Online_and_generic_name()
-//                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
-//                    } else if UserStore.shared.isOnline, UserStore.shared.user.email != nil{
-//                        self.delegate?.case_option_3_Online_and_custom_email()
-//                        self.delegate?.vwUserStatus.btnUsernameFilled.setTitle(UserStore.shared.user.username, for: .normal)
-//                    } else if !UserStore.shared.isOnline, UserStore.shared.user.email != nil {
-//                        self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", backScreen: false, dismissView: false)
-//                        self.delegate?.case_option_4_Offline_and_custom_email()
-//                    }
-//                    self.delegate?.removeSpinner()
                 }
-                
-                
-                
-//                self.templateAlert(alertTitle: "Successfully deleted user", alertMessage: "Your app's generic username has no data associated with it.",dismissView: true)
+
             case .failure(let error):
+                print("- AreYouSureModalVC #4")
                 print("error: \(error)")
-//                self.templateAlert(alertTitle: "Failed to delete", alertMessage: "")
                 self.delegate?.templateAlert(alertTitle: "Failed to delete", alertMessage: "", completion: nil)
             }
+            print("- AreYouSureModalVC #5")
             self.removeSpinner()
         }
-
+        print("- AreYouSureModalVC #6")
     }
     
     private func addTapGestureRecognizer() {
@@ -189,9 +176,7 @@ class AreYouSureModalVC: TemplateVC {
 
     }
     
-    
     // For Delete User Apple Health from ManageDataVC
-    
     func setup_btnDeleteUserAppleHealth(){
         btnDeleteUserAppleHealth.layer.borderColor = UIColor.systemRed.cgColor
         btnDeleteUserAppleHealth.layer.borderWidth = 2
@@ -241,17 +226,12 @@ class AreYouSureModalVC: TemplateVC {
 protocol AreYouSureModalVcDelegate: AnyObject {
     func removeSpinner()
     func showSpinner()
-//    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
     func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func presentAlertController(_ alertController: UIAlertController)
     func touchDown(_ sender: UIButton)
     func presentNewView(_ uiViewController: UIViewController)
     var vwUserStatus: UserVcUserStatusView {get}
     var vwLocationDayWeather: UserVcLocationDayWeather {get}
-    func case_option_1_Offline_and_generic_name()
-    func case_option_2_Online_and_generic_name()
-    func case_option_3_Online_and_custom_email()
-    func case_option_4_Offline_and_custom_email()
     func manageUserVcOptionalViews()
     
 }
@@ -260,7 +240,6 @@ protocol AreYouSureModalVcDelegate: AnyObject {
 protocol AreYouSureModalVcDelegateDeleteUserHealthData: AnyObject {
     func removeSpinner()
     func showSpinner()
-    //    func templateAlert(alertTitle:String,alertMessage: String,  backScreen: Bool, dismissView:Bool)
     func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func presentAlertController(_ alertController: UIAlertController)
     func touchDown(_ sender: UIButton)
