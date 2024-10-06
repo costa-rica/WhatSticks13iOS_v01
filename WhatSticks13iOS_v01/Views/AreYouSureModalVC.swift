@@ -127,7 +127,7 @@ class AreYouSureModalVC: TemplateVC {
                     if !UserStore.shared.isOnline{
                         print("- AreYouSureModalVC #2")
                         self.delegate?.templateAlert(alertTitle: "No connection", alertMessage: "", completion: {
-                            
+                            self.delegate?.vwUserStatus.btnRecordCountFilled.setTitle("0", for: .normal)
                             self.delegate?.manageUserVcOptionalViews()
                             self.dismiss(animated: true, completion: nil)
                             print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
@@ -135,7 +135,7 @@ class AreYouSureModalVC: TemplateVC {
                     } else {
                         print("- AreYouSureModalVC #3")
                         self.delegate?.templateAlert(alertTitle: "Success!", alertMessage: "", completion: {
-                            
+                            self.delegate?.vwUserStatus.btnRecordCountFilled.setTitle("0", for: .normal)
                             self.delegate?.manageUserVcOptionalViews()
                             self.dismiss(animated: true, completion: nil)
                             print("AreYouSureModalVC: should have dismissed self: 🚨📢🔔⚠️")
@@ -224,7 +224,7 @@ class AreYouSureModalVC: TemplateVC {
             self.removeSpinner()
         }
         } else {
-            self.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️") {
+            self.templateAlert(alertTitle: "Must be in Normal Mode to access this feature", alertMessage: "⚠️") {
                 self.dismiss(animated: true, completion: nil)
             }
         }

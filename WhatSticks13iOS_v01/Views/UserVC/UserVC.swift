@@ -9,7 +9,7 @@ import UIKit
 
 //class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate, UserVcOfflineDelegate, UserVcRegisterButtonDelegate, UserVcDeleteDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserStatusDevelopmentViewDelegate{
 
-class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButtonDelegate, UserVcDeleteDelegate, UserStatusDevelopmentViewDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserVcOtherSettingsDelegate{
+class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButtonDelegate, UserVcDeleteDelegate, UserStatusDevelopmentViewDelegate, RegisterVcDelegate, AreYouSureModalVcDelegate, UserVcOtherSettingsDelegate, UserVcOfflineDelegate{
     
     let scrollView = UIScrollView()
     let contentView = UIView()
@@ -38,11 +38,13 @@ class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButto
     override func viewDidLoad() {
         print("- in UserVC viewDidLoad 🙋🏻-")
         super.viewDidLoad()
-//        vwOffline.delegate = self
+        vwOffline.delegate = self
         vwRegisterButton.delegate = self
         vwLocationDayWeather.delegate = self
         vwUserDeleteAccount.delegate = self
         vwOtherSettings.delegate = self
+        vwUserStatusDeveloperView.delegate = self
+
         
         self.setup_TopSafeBar()
         setupScrollView()
@@ -53,6 +55,16 @@ class UserVC: TemplateVC, UserVcLocationDayWeatherDelegate,  UserVcRegisterButto
         print("--->>>> what is UserStore.shared.isGuestMode: \(UserStore.shared.isGuestMode)")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("--- START UserVC.viewWillApear > inspect Location 📍🗺️ booleans:")
+        print("UserDefaults 🙋‍♂️:")
+        print("UserDefaults location_permission_ws: \(UserDefaults.standard.bool(forKey: "location_permission_ws"))")
+        print("UserDefaults location_permission_device: \(UserDefaults.standard.bool(forKey: "location_permission_device"))")
+        print("UserStore.user 📲")
+        print("🗺️ location_permission_ws: \(UserStore.shared.user.location_permission_ws)")
+        print("🗺️ location_permission_device: \(UserStore.shared.user.location_permission_device)")
+        print("--- END UserVC.UserVcLocaitonDayWeather -----------")
+    }
 
     // Method to add a new view to the stackView
     func addView(_ newView: UIView) {

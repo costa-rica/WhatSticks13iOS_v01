@@ -90,7 +90,7 @@ class UserVcOtherSettings: UIView {
         print("- in swtchGuestOptionValueChanged 🙋🏻")
         if UserStore.shared.isGuestMode{
             print("- UserVCOtherSEttings > swtchGuestOptionValueChanged > if UserStore.shared.isGuestMode{")
-            self.delegate?.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️", completion: {
+            self.delegate?.templateAlert(alertTitle: "Must be in Normal Mode to access this feature", alertMessage: "⚠️", completion: {
                 self.swtchGuestOption.isOn=true
             })
         } else {

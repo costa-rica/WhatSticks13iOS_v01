@@ -152,6 +152,7 @@ class UserVcLocationDayWeather: UIView {
     @objc func switchValueChanged(_ sender: UISwitch) {
         print("- in switchValueChanged")
         delegate?.showSpinner()
+
         if UserStore.shared.isGuestMode{
             let informationVc = InformationVC()
             informationVc.vwInformation.lblTitle.text = "Guest Mode"
@@ -176,6 +177,16 @@ class UserVcLocationDayWeather: UIView {
                                 self.delegate?.removeSpinner()
                             })
                             
+                            
+                            print("--- START UserVC.UserVcLocaitonDayWeather #1 > inspect Location 📍🗺️ booleans:")
+                            print("UserDefaults 🙋‍♂️:")
+                            print("UserDefaults location_permission_ws: \(UserDefaults.standard.bool(forKey: "location_permission_ws"))")
+                            print("UserDefaults location_permission_device: \(UserDefaults.standard.bool(forKey: "location_permission_device"))")
+                            print("UserStore.user 📲")
+                            print("🗺️ location_permission_ws: \(UserStore.shared.user.location_permission_ws)")
+                            print("🗺️ location_permission_device: \(UserStore.shared.user.location_permission_device)")
+                            print("--- END UserVC.UserVcLocaitonDayWeather -----------")
+                            
                         default:
                             self.delegate?.templateAlert(alertTitle: "",alertMessage: "Unable to reach What Sticks servers to analyze this update. \n\n Try again or contact what-sticks.com@gmail.com.", completion: {
                                 self.delegate?.removeSpinner()
@@ -193,6 +204,14 @@ class UserVcLocationDayWeather: UIView {
                             self.delegate?.templateAlert(alertTitle: "Success!",alertMessage: nil, completion: {
                                 self.delegate?.removeSpinner()
                             })
+                            print("--- START  UserVC.UserVcLocaitonDayWeather #2 > inspect Location 📍🗺️ booleans:")
+                            print("UserDefaults 🙋‍♂️:")
+                            print("UserDefaults location_permission_ws: \(UserDefaults.standard.bool(forKey: "location_permission_ws"))")
+                            print("UserDefaults location_permission_device: \(UserDefaults.standard.bool(forKey: "location_permission_device"))")
+                            print("UserStore.user 📲")
+                            print("🗺️ location_permission_ws: \(UserStore.shared.user.location_permission_ws)")
+                            print("🗺️ location_permission_device: \(UserStore.shared.user.location_permission_device)")
+                            print("--- END UserVC.UserVcLocaitonDayWeather -----------")
                             
                         default:
                             self.delegate?.templateAlert(alertTitle: "",alertMessage: "Unable to reach What Sticks servers to analyze this update. \n\n Try again or contact what-sticks.com@gmail.com.", completion: {
@@ -219,6 +238,15 @@ class UserVcLocationDayWeather: UIView {
                     self.setLocationSwitchLabelText()
                     LocationFetcher.shared.locationManager.stopMonitoringSignificantLocationChanges()
                     self.delegate?.removeSpinner()
+                    
+                    print("--- START UserVC.UserVcLocaitonDayWeather #3 > inspect Location 📍🗺️ booleans:")
+                    print("UserDefaults 🙋‍♂️:")
+                    print("UserDefaults location_permission_ws: \(UserDefaults.standard.bool(forKey: "location_permission_ws"))")
+                    print("UserDefaults location_permission_device: \(UserDefaults.standard.bool(forKey: "location_permission_device"))")
+                    print("UserStore.user 📲")
+                    print("🗺️ location_permission_ws: \(UserStore.shared.user.location_permission_ws)")
+                    print("🗺️ location_permission_device: \(UserStore.shared.user.location_permission_device)")
+                    print("--- END UserVC.UserVcLocaitonDayWeather -----------")
                     
                 default:
                     self.delegate?.templateAlert(alertTitle: "Failure", alertMessage: "Probably a problem connecting to What Sticks Servers. Try again later or contact what-sticks.com@gmail.com", completion: {

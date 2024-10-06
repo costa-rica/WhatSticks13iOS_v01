@@ -161,7 +161,7 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
         }, completion: nil)
         print(" send data")
         if UserStore.shared.isGuestMode{           
-            self.templateAlert(alertTitle: "Must be in Normal Mode to toggle this off", alertMessage: "⚠️") {
+            self.templateAlert(alertTitle: "Must be in Normal Mode to access this feature", alertMessage: "⚠️") {
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -229,7 +229,7 @@ extension ManageDataVC{
                 self.spinnerScreenLblMessage(message: "Retrieved \(formatted_arryStepsDictCount) Steps records")
 
             case let .failure(error):
-                self.templateAlert(alertTitle: "Alert", alertMessage: "This app will not function correctly without steps data. Go to Settings > Health > Data Access & Devices > WhatSticks11iOS to grant access")
+                self.templateAlert(alertTitle: "Alert", alertMessage: "This app will not function correctly without steps data. Go to Settings > Health > Data Access & Devices > WhatSticks to grant access")
                 print("There was an error getting steps: \(error)")
                 self.removeSpinner()
             }
@@ -247,7 +247,7 @@ extension ManageDataVC{
                 }
 
             case let .failure(error):
-                self.templateAlert(alertTitle: "Alert", alertMessage: "This app will not function correctly without sleep data. Go to Settings > Health > Data Access & Devices > WhatSticks11iOS to grant access")
+                self.templateAlert(alertTitle: "Alert", alertMessage: "This app will not function correctly without sleep data. Go to Settings > Health > Data Access & Devices > WhatSticks to grant access")
                 print("There was an error getting sleep: \(error)")
                 self.removeSpinner()
                 

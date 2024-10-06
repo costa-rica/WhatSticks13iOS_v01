@@ -69,14 +69,19 @@ class UserVcOffline: UIView {
         
         lblDescriptionTitle.accessibilityIdentifier="lblDescriptionTitle"
         lblDescriptionTitle.translatesAutoresizingMaskIntoConstraints = false
-        lblDescriptionTitle.text = "Why do I want to connect device?"
+        lblDescriptionTitle.text = "Why do I want to connect device? "
+        lblDescriptionTitle.lineBreakMode = .byWordWrapping
+//        lblDescriptionTitle.lineBreakStrategy = .standard
         lblDescriptionTitle.font = UIFont(name: "ArialRoundedMTBold", size: 20)
-        lblDescriptionTitle.numberOfLines=0
+//        lblDescriptionTitle.font = .systemFont(ofSize: 25)
+//        lblDescriptionTitle.numberOfLines=1
+//        lblDescriptionTitle.backgroundColor = .green
+        lblDescriptionTitle.adjustsFontSizeToFitWidth = true
         self.addSubview(lblDescriptionTitle)
         
         lblDescription.accessibilityIdentifier="lblDescription"
         lblDescription.translatesAutoresizingMaskIntoConstraints = false
-        lblDescription.text = "If you would like to see your dashboard you will need to connect your device so your data can be processed."
+        lblDescription.text = "If you do not see a dashboard you will need to connect your device for data processing."
         lblDescription.numberOfLines=0
         self.addSubview(lblDescription)
         
@@ -97,11 +102,11 @@ class UserVcOffline: UIView {
             
             lblDescriptionTitle.topAnchor.constraint(equalTo: btnConnectDevice.bottomAnchor, constant: heightFromPct(percent: 3)),
             lblDescriptionTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: widthFromPct(percent: 2)),
-            lblDescriptionTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            lblDescriptionTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: widthFromPct(percent: 2)),
             
             lblDescription.topAnchor.constraint(equalTo: lblDescriptionTitle.bottomAnchor, constant: heightFromPct(percent: 2)),
             lblDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant: widthFromPct(percent: 3)),
-            lblDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: widthFromPct(percent: -1)),
+            lblDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant: widthFromPct(percent: -2)),
             lblDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: heightFromPct(percent: -5))
             
         ])

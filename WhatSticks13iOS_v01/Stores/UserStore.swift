@@ -206,6 +206,16 @@ class UserStore {
                     UserDefaults.standard.set(unwp_token, forKey: "token")
                     RequestStore.shared.token = unwp_token
                 }
+                
+                print("--- START assignUser > inspect Location 📍🗺️ booleans:")
+                print("UserDefaults 🙋‍♂️:")
+                print("UserDefaults location_permission_ws: \(UserDefaults.standard.bool(forKey: "location_permission_ws"))")
+                print("UserDefaults location_permission_device: \(UserDefaults.standard.bool(forKey: "location_permission_device"))")
+                print("UserStore.user 📲")
+                print("🗺️ location_permission_ws: \(UserStore.shared.user.location_permission_ws)")
+                print("🗺️ location_permission_device: \(UserStore.shared.user.location_permission_device)")
+                print("--- END assignUser > inspect Location -----------")
+                
             }
             print("- finished decoding and assigning User")
         }
