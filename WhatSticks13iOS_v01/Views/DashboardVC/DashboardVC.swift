@@ -162,55 +162,39 @@ extension DashboardVC {
             case let .success(hasNewLastUpdateDate):
                 
                 if hasNewLastUpdateDate{
+                    
+                    if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
+                        DispatchQueue.main.async {
+                            print("- unwp_refreshControlTblDashboard.endRefreshing() ")
+                            unwp_refreshControlTblDashboard.endRefreshing()
+                        }
+                    }
+                    if let unwp_tblDashboard = self.tblDashboard {
+                        DispatchQueue.main.async {
+                            unwp_tblDashboard.reloadData()
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
+                        if UserStore.shared.arryDashboardTableObjects.count > 0{
+                            self.setupUserHasDashboard()
+                            let currentDashboardObjPos = UserStore.shared.currentDashboardObjPos ?? 0
+                            if let unwp_dashTitle = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
+                                let btnTitle = " " + unwp_dashTitle + " "
+                                self.vwDashboardHeader.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
+                            }
+                        }
                         self.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
                     }
                 }
-                
-                
-//                if let arryDataSourceObjsArray = jsonDict["arryDataSourceObjects"] as? [[String: Any]] {
-//                    //                if let arryDataSourceObjs =  jsonDict["arryDataSourceObjects"] as? DataSourceObject{
-//                    do {
-//                        let jsonData = try JSONSerialization.data(withJSONObject: arryDataSourceObjsArray, options: [])
-//                        let arryDataSourceObjs = try JSONDecoder().decode([DataSourceObject].self, from: jsonData)
-//                        print("- got Object 🔥")
-//                        if let userStoreArryDataSourceObjs = UserStore.shared.arryDataSourceObjects{
-//                            print("-- unpacked optionals #1")
-//                            if arryDataSourceObjs[0].lastUpdate == userStoreArryDataSourceObjs[0].lastUpdate{
-//                                print("-- unpacked optionals #1 - lastUpdate are samsies -")
-//
-//                            } else {
-//                                DispatchQueue.main.async {
-//                                    self.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)
-//                                }
-//                            }
-//                        }
-//                        else{
-//                            print("-- unpacked optionals #1 - lastUpdate are NOT samsies -")
-//                        }
-//                        print("-- Ended/After uppack sequence -")
-//                    }
-//                    
-//                    catch{
-//                        print("Failed to decode DataSourceObject: \(error)")
-//                        self.templateAlert(alertTitle: "No new data received", alertMessage: nil, completion: nil)
-//                    }
-//                }
-//                
-                
-                
-                
                 if let unwp_refreshControlTblDashboard = self.refreshControlTblDashboard {
                     DispatchQueue.main.async {
                         print("- unwp_refreshControlTblDashboard.endRefreshing() ")
                         unwp_refreshControlTblDashboard.endRefreshing()
                     }
                 }
-                if let unwp_tblDashboard = self.tblDashboard {
-                    DispatchQueue.main.async {
-                        unwp_tblDashboard.reloadData()
-                    }
-                }
+                
+ 
                 print("- End of success update_arrayDAsh...")
             case let .failure(error):
                 print("failure: DashboardVC trying to update dashboard via func update_arryDashboardTableObjects; the error is \(error)")

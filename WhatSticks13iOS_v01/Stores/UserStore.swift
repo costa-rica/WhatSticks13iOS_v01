@@ -249,6 +249,8 @@ class UserStore {
             checkUser()
             // Condition #1: Register user ambivalent_elf_####
             if UserDefaults.standard.string(forKey: "userName") == nil || UserDefaults.standard.string(forKey: "userName") == "new_user"  {
+                print("- connectDevice() condition #1: Login with ws_api_password ---")
+
                 callRegisterGenericUser { result_string_string_dict in
                     switch result_string_string_dict{
                     case .success(_):
@@ -266,6 +268,7 @@ class UserStore {
             }
             // Condition #2: Login with Generic Elf
             else if UserDefaults.standard.string(forKey: "email") == nil || UserDefaults.standard.bool(forKey: "pendingEmailValidation")  {
+                print("- connectDevice() condition #2: Login with userId ---")
                 self.user.username  = UserDefaults.standard.string(forKey: "userName")
                 // /login user
                 callLoginGenericUser(user: self.user) { result_dict_string_any_or_error in
@@ -284,7 +287,8 @@ class UserStore {
             }
             // Condition #3: Login with account
             else {
-                print("---- Login with email and password ---")
+                print("- connectDevice() condition #3: Login with email and password ---")
+
                 callLogin(user: self.user) { result_dict_or_error in
                     switch result_dict_or_error {
                     case .success(_):
@@ -420,11 +424,11 @@ extension UserStore{
     
     func callRegisterGenericUser(completion: @escaping (Result<[String:Any], Error>) -> Void) {
         print("- in callRegisterGenericUser")
-        guard let unwp_email = user.username else {
-            completion(.failure(UserStoreError.userHasNoUsername))
-            return
-        }
-        let result = RequestStore.shared.createRequestWithTokenAndBody(endPoint: .register_generic_account, token: false, body: ["new_username": unwp_email, "ws_api_password":Config.ws_api_password])
+//        guard let unwp_username = user.username else {
+//            completion(.failure(UserStoreError.userHasNoUsername))
+//            return
+//        }
+        let result = RequestStore.shared.createRequestWithTokenAndBody(endPoint: .register_generic_account, token: false, body: [ "ws_api_password":Config.ws_api_password])
         
         
         switch result {
