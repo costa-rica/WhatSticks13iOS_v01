@@ -424,10 +424,7 @@ extension UserStore{
     
     func callRegisterGenericUser(completion: @escaping (Result<[String:Any], Error>) -> Void) {
         print("- in callRegisterGenericUser")
-//        guard let unwp_username = user.username else {
-//            completion(.failure(UserStoreError.userHasNoUsername))
-//            return
-//        }
+
         let result = RequestStore.shared.createRequestWithTokenAndBody(endPoint: .register_generic_account, token: false, body: [ "ws_api_password":Config.ws_api_password])
         
         
