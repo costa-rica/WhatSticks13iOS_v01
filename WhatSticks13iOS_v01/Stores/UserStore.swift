@@ -242,6 +242,7 @@ class UserStore {
     
     func connectDevice(completion: @escaping () -> Void){
         print("- in connectDevice(completion) 📲")
+        logUserEvent(className: "UserStore", method: "connectDevice", note:"User started connectDevice Process")
         if isGuestMode{
             loadGuestUser()
             completion()
@@ -250,6 +251,7 @@ class UserStore {
             // Condition #1: Register user ambivalent_elf_####
             if UserDefaults.standard.string(forKey: "userName") == nil || UserDefaults.standard.string(forKey: "userName") == "new_user"  {
                 print("- connectDevice() condition #1: Login with ws_api_password ---")
+                logUserEvent(className: "UserStore", method: "connectDevice", note:"Condition #1: Register user ambivalent_elf_####")
 
                 callRegisterGenericUser { result_string_string_dict in
                     switch result_string_string_dict{
@@ -269,6 +271,7 @@ class UserStore {
             // Condition #2: Login with Generic Elf
             else if UserDefaults.standard.string(forKey: "email") == nil || UserDefaults.standard.bool(forKey: "pendingEmailValidation")  {
                 print("- connectDevice() condition #2: Login with userId ---")
+                logUserEvent(className: "UserStore", method: "connectDevice", note:"Condition #2: Login with Generic Elf")
                 self.user.username  = UserDefaults.standard.string(forKey: "userName")
                 // /login user
                 callLoginGenericUser(user: self.user) { result_dict_string_any_or_error in
@@ -288,7 +291,7 @@ class UserStore {
             // Condition #3: Login with account
             else {
                 print("- connectDevice() condition #3: Login with email and password ---")
-
+                logUserEvent(className: "UserStore", method: "connectDevice", note:"Condition #3: Login with account")
                 callLogin(user: self.user) { result_dict_or_error in
                     switch result_dict_or_error {
                     case .success(_):
@@ -424,7 +427,7 @@ extension UserStore{
     
     func callRegisterGenericUser(completion: @escaping (Result<[String:Any], Error>) -> Void) {
         print("- in callRegisterGenericUser")
-
+        logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"started the process to make the request to API")
         let result = RequestStore.shared.createRequestWithTokenAndBody(endPoint: .register_generic_account, token: false, body: [ "ws_api_password":Config.ws_api_password])
         
         
@@ -435,6 +438,7 @@ extension UserStore{
                 guard let unwrapped_data = data else {
                     OperationQueue.main.addOperation {
                         completion(.failure(UserStoreError.failedToReceiveServerResponse))
+                        logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"failed to recieve response")
                         print("failed to recieve response")
                     }
                     return
@@ -442,8 +446,9 @@ extension UserStore{
                 do {
                     if let jsonResult = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
 //                        print("JSON dictionary: \(jsonResult)")
-                        
+                        logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"got a good response about to complete with success")
                         self.assignUser(dictUser: jsonResult)
+                        logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"got a good response about to complete with success - assinged User")
                         OperationQueue.main.addOperation {
                             completion(.success(jsonResult))
                         }
@@ -452,6 +457,7 @@ extension UserStore{
                 } catch {
                     OperationQueue.main.addOperation {
                         print("--- Failed in callRegisterGenericUser")
+                        logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"catch -> Failed in callRegisterGenericUser")
                         completion(.failure(UserStoreError.failedToLogin))
                     }
                 }
@@ -461,6 +467,7 @@ extension UserStore{
         case .failure(let error):
             // Handle the error here
             print("* error encodeing from reqeustStore.createRequestLogin")
+            logUserEvent(className: "UserStore", method: "callRegisterGenericUser", note:"error encodeing from reqeustStore.createRequestLogin")
             OperationQueue.main.addOperation {
                 completion(.failure(error))
             }
@@ -469,6 +476,7 @@ extension UserStore{
     
     func callLoginGenericUser(user:User, completion: @escaping(Result<[String:Any],Error>) ->Void){
         print("- in callLoginGenericUser -")
+        logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"started the process to make the request to API")
         var parameters: [String: String] = ["ws_api_password": Config.ws_api_password]
 //        if let username = user.username {
 //            parameters["username"] = username
@@ -485,21 +493,25 @@ extension UserStore{
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Network request error: \(error.localizedDescription)")
+                logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"Network request error: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("No data response or invalid response")
+                logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"No data response or invalid response")
                 completion(.failure(UserStoreError.failedToReceiveServerResponse))
                 return
             }
             if httpResponse.statusCode == 400 {
                 print("Received 400 Bad Request")
+                logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"Received 400 Bad Request")
                 completion(.failure(UserStoreError.userHasNoUsername))
                 return
             }
             guard let unwrapped_data = data else {
                 print("No data response")
+                logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"No data response")
                 completion(.failure(UserStoreError.failedToReceiveServerResponse))
                 return
             }
@@ -507,9 +519,11 @@ extension UserStore{
                 if let jsonResult = try JSONSerialization.jsonObject(with: unwrapped_data, options: []) as? [String: Any] {
 //                    print("--- This should include a ArryDataSourceObjects ----")
 //                    print("JSON dictionary: \(jsonResult)")
+                    logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"got a good response about to assign response body to user, arryDataSource and arrayDash")
                     self.assignUser(dictUser: jsonResult)
                     self.assignArryDataSourceObjects(jsonResponse: jsonResult)
                     self.assignArryDashboardTableObjects(jsonResponse: jsonResult)
+                    logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"got a good response assigned response body to user, arryDataSource and arrayDash")
                     OperationQueue.main.addOperation {
                         completion(.success(jsonResult))
                     }
@@ -518,6 +532,7 @@ extension UserStore{
             } catch {
                 OperationQueue.main.addOperation {
                     print("Failed to decode user or find a user in API response: \(UserStoreError.failedToLogin)")
+                    logUserEvent(className: "UserStore", method: "callLoginGenericUser", note:"Failed to decode user or find a user in API response: \(UserStoreError.failedToLogin)")
                     completion(.failure(UserStoreError.failedToLogin))
                 }
             }
@@ -528,6 +543,7 @@ extension UserStore{
     
     func callLogin(user:User, completion: @escaping(Result<[String:Any],UserStoreError>) ->Void){
         print("- in callLoginUser -")
+        logUserEvent(className: "UserStore", method: "callLogin", note:"started the process to make the request to API")
         var parameters: [String: String] = ["ws_api_password": Config.ws_api_password]
         if let username = user.email,
            let password = user.password{
@@ -546,12 +562,14 @@ extension UserStore{
                 // Check for an error. If there is one, complete with failure.
                 if let error = error {
                     print("Network request error: \(error.localizedDescription)")
+                    logUserEvent(className: "UserStore", method: "callLogin", note:"Network request error: \(error.localizedDescription)")
                     completion(.failure(UserStoreError.noInternetConnection))
                     return
                 }
                 // Ensure data is not nil, otherwise, complete with a custom error.
                 guard let unwrappedData = data else {
                     print("No data response")
+                    logUserEvent(className: "UserStore", method: "callLogin", note:"No data response")
                     completion(.failure(UserStoreError.failedToReceiveServerResponse))
                     return
                 }
@@ -560,6 +578,7 @@ extension UserStore{
                     // Attempt to decode the JSON response.
                     if let jsonResult = try JSONSerialization.jsonObject(with: unwrappedData, options: []) as? [String: Any] {
                         print("JSON serialized well")
+                        logUserEvent(className: "UserStore", method: "callLogin", note:"good response - about to unpack response and compelete")
                         let keysToExtract = ["alert_title", "alert_message"]
                         var dictModifiedResponse: [String: String] = [:]
                         
@@ -571,12 +590,14 @@ extension UserStore{
                         self.assignUser(dictUser: jsonResult)
                         self.assignArryDataSourceObjects(jsonResponse: jsonResult)
                         self.assignArryDashboardTableObjects(jsonResponse: jsonResult)
-                        // Ensure completion handler is called on the main queue.
+                        logUserEvent(className: "UserStore", method: "callLogin", note:"good response - about to compelete - response unpacked and loaded")
+
                         DispatchQueue.main.async {
                             completion(.success(dictModifiedResponse))
                         }
                     } else {
                         print("- there is a response - 2 ")
+                        logUserEvent(className: "UserStore", method: "callLogin", note:"not a good response - there is a response - 2")
                         // If decoding fails due to not being a [String: String]
                         DispatchQueue.main.async {
                             completion(.failure(UserStoreError.failedToReceiveExpectedResponse))
@@ -585,6 +606,7 @@ extension UserStore{
                 } catch {
                     // Handle any errors that occurred during the JSON decoding.
                     print("---- UserStore.registerNewUser: Failed to read response")
+                    logUserEvent(className: "UserStore", method: "callLogin", note:"Failed to read response")
                     DispatchQueue.main.async {
                         completion(.failure(UserStoreError.failedDecode))
                     }
@@ -593,6 +615,7 @@ extension UserStore{
             task.resume()
         case .failure(let error):
             print("* error encodeing from requestStore.callRegisterNewUser: \(error)")
+            logUserEvent(className: "UserStore", method: "callLogin", note:"error encodeing from requestStore.callRegisterNewUser: \(error)")
             OperationQueue.main.addOperation {
                 completion(.failure(UserStoreError.requestStoreError))
             }

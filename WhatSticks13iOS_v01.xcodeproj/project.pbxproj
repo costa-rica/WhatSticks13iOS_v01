@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A589EF2CBC04C2009ACCA6 /* LoggingUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A589EE2CBC04C2009ACCA6 /* LoggingUtilities.swift */; };
 		01D6FF902C7DCF6500087708 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */; };
 		01D6FF922C7DCF6500087708 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF912C7DCF6500087708 /* SceneDelegate.swift */; };
 		01D6FF942C7DCF6500087708 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF932C7DCF6500087708 /* ViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01A589EE2CBC04C2009ACCA6 /* LoggingUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingUtilities.swift; sourceTree = "<group>"; };
 		01D6FF8C2C7DCF6500087708 /* WhatSticks13iOS_v01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatSticks13iOS_v01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01D6FF912C7DCF6500087708 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				01D6FFAF2C7DD06700087708 /* AppleHealthDataFetcher.swift */,
 				01D6FFB02C7DD06700087708 /* LocationFetcher.swift */,
+				01A589EE2CBC04C2009ACCA6 /* LoggingUtilities.swift */,
 				01D6FFB12C7DD06700087708 /* MiscUtils.swift */,
 			);
 			path = Utilities;
@@ -440,6 +443,7 @@
 				01D6FFD72C7DD06800087708 /* MiscUtils.swift in Sources */,
 				01D6FFE42C7DD06800087708 /* UserVcDelete.swift in Sources */,
 				01D6FFF12C7DD06800087708 /* UserStore.swift in Sources */,
+				01A589EF2CBC04C2009ACCA6 /* LoggingUtilities.swift in Sources */,
 				01D6FFEA2C7DD06800087708 /* InformationView.swift in Sources */,
 				01D6FFD82C7DD06800087708 /* DashboardTableCell.swift in Sources */,
 				01D6FFE32C7DD06800087708 /* UserVcComponents.swift in Sources */,

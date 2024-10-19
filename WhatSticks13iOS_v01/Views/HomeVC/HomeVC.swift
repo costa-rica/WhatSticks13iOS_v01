@@ -6,6 +6,7 @@
 //
 
 import UIKit
+//import Sentry
 
 class HomeVC: TemplateVC, SelectAppModeVcDelegate {
     
@@ -57,6 +58,7 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
+        logUserEvent(className: "HomeVC", method: "touchUpInsideGuest", note:"User selected Guest Mode")
         self.showSpinner()
         tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
         UserStore.shared.isGuestMode = true
@@ -73,11 +75,16 @@ class HomeVC: TemplateVC, SelectAppModeVcDelegate {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
+        // Add this line to log the event using Sentry
+        
+        logUserEvent(className: "HomeVC", method: "touchUpInsideProduction", note:"User selected Normal Mode")
+
         LocationFetcher.shared.locationManager.requestAlwaysAuthorization()
         self.showSpinner()
         tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
         self.setupNonNormalMode()
         UserStore.shared.connectDevice {
+            logUserEvent(className: "HomeVC", method: "touchUpInsideProduction", note:"In the completion for UserStore.shared.connectDevice -> this means user got a response from the API")
             DispatchQueue.main.async {
                 self.selectAppModeVc.dismiss(animated: true)
                 self.removeSpinner()
@@ -136,45 +143,4 @@ extension HomeVC {
             }
         }
     }
-}
-
-// OBE
-extension HomeVC {
-    
-    
-    
-//    override func viewIsAppearing(_ animated: Bool) {
-//        print("- HomeVc viewIsAppearing 🏡")
-//        if let showGuestModeOption = UserDefaults.standard.value(forKey: "showGuestModeOption") as? Bool {
-//            print("--> found UserDefaults.standard.value(forKey: showGuestModeOption)")
-//            if showGuestModeOption {
-//                presentAppModeOption()
-//            } else {
-//                print("---> Normal Mode with no SelectModeModal presented #2")
-//                self.showSpinner()
-//                tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
-//                self.setupNonNormalMode()
-//                UserStore.shared.connectDevice {
-//                    DispatchQueue.main.async {
-//    //                    self.selectAppModeVc.dismiss(animated: true)
-//                        self.removeSpinner()
-//                    }
-//                }
-//            }
-//        } else if !didPresentAppModeOption {
-//            print("--> else if !didPresentAppModeOption {")
-//            presentAppModeOption()
-//        } else {
-//            print("---> Normal Mode with no SelectModeModal presented")
-//            self.showSpinner()
-//            tabBarController?.tabBar.isUserInteractionEnabled = true// re-activate the Tab Bar items
-//            self.setupNonNormalMode()
-//            UserStore.shared.connectDevice {
-//                DispatchQueue.main.async {
-////                    self.selectAppModeVc.dismiss(animated: true)
-//                    self.removeSpinner()
-//                }
-//            }
-//        }
-//    }
 }
