@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012B25442CC39F3500DA61A0 /* SentDataModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012B25432CC39F3500DA61A0 /* SentDataModalVC.swift */; };
 		01A589EF2CBC04C2009ACCA6 /* LoggingUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A589EE2CBC04C2009ACCA6 /* LoggingUtilities.swift */; };
 		01D6FF902C7DCF6500087708 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */; };
 		01D6FF922C7DCF6500087708 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D6FF912C7DCF6500087708 /* SceneDelegate.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		012B25432CC39F3500DA61A0 /* SentDataModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentDataModalVC.swift; sourceTree = "<group>"; };
 		01A589EE2CBC04C2009ACCA6 /* LoggingUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggingUtilities.swift; sourceTree = "<group>"; };
 		01D6FF8C2C7DCF6500087708 /* WhatSticks13iOS_v01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatSticks13iOS_v01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D6FF8F2C7DCF6500087708 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				01D6FFBC2C7DD06800087708 /* ManageDataVC.swift */,
 				01D6FFBD2C7DD06800087708 /* ManageDataVcHeader.swift */,
+				012B25432CC39F3500DA61A0 /* SentDataModalVC.swift */,
 			);
 			path = ManageDataVC;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				01D6FFD62C7DD06800087708 /* LocationFetcher.swift in Sources */,
 				01D6FFEC2C7DD06800087708 /* TabController.swift in Sources */,
 				01D6FFE02C7DD06800087708 /* ManageDataVcHeader.swift in Sources */,
+				012B25442CC39F3500DA61A0 /* SentDataModalVC.swift in Sources */,
 				01D6FFD42C7DD06800087708 /* User.swift in Sources */,
 				01D6FFEE2C7DD06800087708 /* HealthDataStore.swift in Sources */,
 				01D6FFE52C7DD06800087708 /* UserVcLocationDayWeather.swift in Sources */,

@@ -8,14 +8,11 @@
 import UIKit
 
 class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
-//    var userStore: UserStore!
-//    var appleHealthDataFetcher:AppleHealthDataFetcher!
-//    var healthDataStore: HealthDataStore!
+
     var vwManageDataVcHeader = ManageDataVcHeader()
     var vwManageDataVcOffline = InformationView()
     let datePicker = UIDatePicker()
     var dtUserHistory:Date?
-    
     let btnSendData = UIButton()
     
     var arryStepsDict = [AppleHealthQuantityCategory](){
@@ -44,15 +41,16 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
         }
     }
     
-    var strStatusMessage=String()
+    var strStatusMessage = String()
     
     var btnDeleteData = UIButton()
     
+    var dictAppleHealthDataForInfoVc = [String:String]()
+    var vwSentDataModalVc = SentDataModalVC()
+    
     override func viewDidLoad() {
         print("* ManageDataVC viewDidLoad *")
-//        userStore = UserStore.shared
         if !UserStore.shared.isGuestMode{
-            print("- prompting for authorizeHealthKit() ")
             AppleHealthDataFetcher.shared.authorizeHealthKit()
         }
         setup_TopSafeBar()
@@ -79,13 +77,8 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
     func setupManageDataVcOnline(){
         vwManageDataVcOffline.removeFromSuperview()
         setupManageDataVcHeaderView()
-//        setup_ManageDataVcTitle()
-//        setup_UserVcAccountView()
         setupDatePicker()
         setup_btnSendData()
-//        print("- ManageDataVC setupManageDataVcOnline() -")
-//        print("UserStore.shared.arryaDataSourceObjects?: \(UserStore.shared.arryDataSourceObjects?.first)")
-//        print(UserStore.shared.arryDataSourceObjects?.first?.recordCount)
         if let recordCountString = UserStore.shared.arryDataSourceObjects?.first?.recordCount?.replacingOccurrences(of: ",", with: ""),
            let recordCount = Int(recordCountString),
            recordCount > 0 {
@@ -96,14 +89,11 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
     func setupManageDataVcHeaderView(){
         vwManageDataVcHeader.accessibilityIdentifier = "vwManageDataVcHeader"
         vwManageDataVcHeader.translatesAutoresizingMaskIntoConstraints = false
-//        vwDashboardHeader.backgroundColor = UIColor(named: "ColorRow2")
-
         view.addSubview(vwManageDataVcHeader)
         NSLayoutConstraint.activate([
             vwManageDataVcHeader.topAnchor.constraint(equalTo: vwTopSafeBar.bottomAnchor),
             vwManageDataVcHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             vwManageDataVcHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            vwManageDataVcHeader.bottomAnchor.constraint(equalTo: vwTopSafeBar.bottomAnchor, constant: heightFromPct(percent: 10))
         ])
     }
 
@@ -159,15 +149,14 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveEaseInOut], animations: {
             sender.transform = .identity
         }, completion: nil)
-        print(" send data")
-        if UserStore.shared.isGuestMode{           
+        print("- touchUpInsideStartCollectingAppleHealth")
+        if UserStore.shared.isGuestMode{
             self.templateAlert(alertTitle: "Must be in Normal Mode to access this feature", alertMessage: "⚠️") {
                 self.dismiss(animated: true, completion: nil)
             }
         }
         else {
             dtUserHistory = datePicker.date
-            
             let calendar = Calendar.current
             // Strip off time components from both dates
             let selectedDate = calendar.startOfDay(for: datePicker.date)
@@ -204,9 +193,7 @@ class ManageDataVC: TemplateVC, AreYouSureModalVcDelegateDeleteUserHealthData {
 extension ManageDataVC{
     @objc func actionGetStepsData() {
 
-//        if swtchAllHistoryIsOn {
-//            dtUserHistory = nil
-//        } else {
+
             dtUserHistory = datePicker.date
             
             let calendar = Calendar.current
@@ -226,6 +213,7 @@ extension ManageDataVC{
                 print("succesfully collected - arryStepsDict - from healthFetcher class")
                 self.arryStepsDict = arryStepsDict
                 let formatted_arryStepsDictCount = formatWithCommas(number: self.arryStepsDict.count)
+                self.dictAppleHealthDataForInfoVc["Steps"] = formatted_arryStepsDictCount
                 self.spinnerScreenLblMessage(message: "Retrieved \(formatted_arryStepsDictCount) Steps records")
 
             case let .failure(error):
@@ -242,6 +230,7 @@ extension ManageDataVC{
                 print("succesfully collected - arrySleepDict - from healthFetcher class")
                 self.arrySleepDict = arrySleepDict
                 let formatted_arrySleepDictCount = formatWithCommas(number: arrySleepDict.count)
+                self.dictAppleHealthDataForInfoVc["Sleep Time"] = formatted_arrySleepDictCount
                 if let unwp_message = self.lblMessage.text {
                     self.lblMessage.text = unwp_message + "," + "\n \(formatted_arrySleepDictCount) Sleep records"
                 }
@@ -261,6 +250,7 @@ extension ManageDataVC{
                 print("succesfully collected - arryHeartRateDict - from healthFetcher class")
                 self.arryHeartRateDict = arryHeartRateDict
                 let formatted_arryHeartRateDictCount = formatWithCommas(number: arryHeartRateDict.count)
+                self.dictAppleHealthDataForInfoVc["Heart Rate"] = formatted_arryHeartRateDictCount
                 if let unwp_message = self.lblMessage.text {
                     self.lblMessage.text = unwp_message + "," + "\n \(formatted_arryHeartRateDictCount) Heart Rate records"
                 }
@@ -276,9 +266,8 @@ extension ManageDataVC{
             case let .success(arryExerciseTimeDict):
                 print("succesfully collected - arryExerciseTimeDict - from healthFetcher class")
                 self.arryExerciseTimeDict = arryExerciseTimeDict
-//                self.removeLblMessage()
                 let formatted_arryExerciseTimeDictCount = formatWithCommas(number: arryExerciseTimeDict.count)
-//                self.spinnerScreenLblMessage(message: "Retrieved \(formatted_arryExerciseTimeDictCount) Exercise Time records")
+                self.dictAppleHealthDataForInfoVc["Exercise Time"] = formatted_arryExerciseTimeDictCount
                 if let unwp_message = self.lblMessage.text {
                     self.lblMessage.text = unwp_message + "," + "\n \(formatted_arryExerciseTimeDictCount) Exerciese records"
                 }
@@ -294,9 +283,8 @@ extension ManageDataVC{
             case let .success(arryWorkoutDict):
                 print("succesfully collected - arryWorkoutDict - from healthFetcher class")
                 self.arryWorkoutDict = arryWorkoutDict
-//                self.removeLblMessage()
                 let formatted_arryWorkoutDictCount = formatWithCommas(number: arryWorkoutDict.count)
-//                self.spinnerScreenLblMessage(message: "Retrieved \(formatted_arryWorkoutDictCount) Workout records")
+                self.dictAppleHealthDataForInfoVc["Workouts"]=formatted_arryWorkoutDictCount
                 if let unwp_message = self.lblMessage.text {
                     self.lblMessage.text = unwp_message + "," + "\n \(formatted_arryWorkoutDictCount) Workout records"
                 }
@@ -342,7 +330,6 @@ extension ManageDataVC{
         guard let user_id = UserStore.shared.user.id else {
             self.templateAlert(alertMessage: "No user id. check ManageAppleHealthVC sendAppleHealthData.")
             return}
-//        let qty_cat_data_count = arrySleepDict.count + arryStepsDict.count + arryHeartRateDict.count + arryExerciseTimeDict.count
             let arryQtyCatData = arrySleepDict + arryStepsDict + arryHeartRateDict + arryExerciseTimeDict
 
             /* Send apple works outs first */
@@ -351,9 +338,25 @@ extension ManageDataVC{
                 switch responseResult{
                 case .success(_):
                     self.strStatusMessage = self.strStatusMessage + "\n" + "2) Quantity and Category data sent successfully."
-                    self.templateAlert(alertTitle: "Success!",alertMessage: "")
-                    print("*** MangeAppleHealhtVC.sendAppleHealthData successful! ** ")
-
+//                    self.templateAlert(alertTitle: "Success!",alertMessage: "")
+//                    print("*** MangeAppleHealhtVC.sendAppleHealthData successful! ** ")
+//                    
+//                    print("----> self.dictAppleHealthDataForInfoVc.count: \(self.dictAppleHealthDataForInfoVc.count) 👀")
+//                    self.dictAppleHealthDataForInfoVc.forEach { (key,value) in
+//                        print("\(key): \(value) 👀")
+//                    }
+                    
+                    // Present InformationVC
+                    self.vwSentDataModalVc.addAppleHealthDataDict(dictAppleHealthDataForInfoVc: self.dictAppleHealthDataForInfoVc)
+                    self.vwSentDataModalVc.modalPresentationStyle = .overCurrentContext
+                    self.vwSentDataModalVc.modalTransitionStyle = .crossDissolve
+                    self.tabBarController?.tabBar.isUserInteractionEnabled = false
+                    self.present(self.vwSentDataModalVc, animated: true, completion: nil)
+//                    // Re-enable tab bar interaction when SentDataModalVC is dismissed
+//                    self.vwSentDataModalVc.dismiss(animated: true) {
+//                        self.tabBarController?.tabBar.isUserInteractionEnabled = true
+//                    }
+                    
                 case .failure(_):
                     print("---- MangeAppleHealhtVC.sendAppleHealthData failed :( ---- ")
                     self.strStatusMessage = self.strStatusMessage + "\n" + "2) Quantity and Category data NOT sent successfully."

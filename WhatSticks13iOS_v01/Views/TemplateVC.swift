@@ -160,15 +160,11 @@ class TemplateVC: UIViewController {
         ])
     }
     func spinnerScreenLblMessage(message:String){
-//        lblMessage.text = "This is a lot of data so it may take more than a minute"
         lblMessage.text = message
-//        messageLabel.font = UIFont(name: "ArialRoundedMTBold", size: 20)
         lblMessage.numberOfLines = 0
         lblMessage.lineBreakMode = .byWordWrapping
         lblMessage.textColor = .white
         lblMessage.textAlignment = .center
-//        lblMessage.frame = CGRect(x: 0, y: activityIndicator.frame.maxY + 20, width: spinnerView!.bounds.width, height: 50)
-//        lblMessage.isHidden = true
         spinnerView?.addSubview(lblMessage)
         lblMessage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -176,10 +172,6 @@ class TemplateVC: UIViewController {
         lblMessage.leadingAnchor.constraint(equalTo: spinnerView!.leadingAnchor,constant: widthFromPct(percent: 5)),
         lblMessage.trailingAnchor.constraint(equalTo: spinnerView!.trailingAnchor,constant: widthFromPct(percent: -5)),
         ])
-//      Timer to show the label after 3 seconds
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
-//            self.messageLabel.isHidden = false
-//        }
     }
     func removeSpinner() {
         spinnerView?.removeFromSuperview()
