@@ -8,9 +8,10 @@
 import UIKit
 
 class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegate,InformationViewDelegate {
-    
-//    var userStore:UserStore!
-    let vwDashboardHeader = DashboardHeader()
+        
+
+//    let vwDashboardHeader = DashboardHeader()
+    var vwDashboardHeader:DashboardHeader?
     var tblDashboard:UITableView?
     var vwDashboardHasNoData = InformationView()
     
@@ -18,13 +19,13 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
     override func viewDidLoad() {
         print("* DashboardVC viewDidLoad *")
         super.viewDidLoad()
-        vwDashboardHeader.delegate = self
+        vwDashboardHeader?.delegate = self
         setup_TopSafeBar()
         navigationController?.setNavigationBarHidden(true, animated: false)// This seems to really hide the UINavigationBar
     }
     
     func setupUserHasNODashboard(){
-        vwDashboardHeader.removeFromSuperview()
+        vwDashboardHeader?.removeFromSuperview()
         tblDashboard?.removeFromSuperview()
         vwDashboardHasNoData.delegate = self
         vwDashboardHasNoData.setup_btnRefreshDashboard()
@@ -48,6 +49,8 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
     }
     
     private func setup_vwDashboardHeader(){
+        vwDashboardHeader = DashboardHeader()
+        guard let vwDashboardHeader = vwDashboardHeader else {return}
         vwDashboardHeader.accessibilityIdentifier = "vwDashboardHeader"
         vwDashboardHeader.translatesAutoresizingMaskIntoConstraints = false
         vwDashboardHeader.btnDashboardNamePicker.backgroundColor = UIColor(named: "ColorRow3Textfields")
@@ -72,7 +75,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
         self.tblDashboard!.estimatedRowHeight = 100
         view.addSubview(self.tblDashboard!)
         NSLayoutConstraint.activate([
-            tblDashboard!.topAnchor.constraint(equalTo: vwDashboardHeader.bottomAnchor, constant: heightFromPct(percent: 2)),
+            tblDashboard!.topAnchor.constraint(equalTo: vwDashboardHeader?.bottomAnchor ?? view.topAnchor, constant: heightFromPct(percent: 2)),
             tblDashboard!.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tblDashboard!.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tblDashboard!.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -109,7 +112,7 @@ class DashboardVC: TemplateVC, DashboardHeaderDelegate, SelectDashboardVCDelegat
             print("-- > this should change here")
             if let unwp_dashTitle = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
                 let btnTitle = " " + unwp_dashTitle + " "
-                self.vwDashboardHeader.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
+                self.vwDashboardHeader?.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
             }
             self.tblDashboard?.reloadData()
         }
@@ -181,7 +184,7 @@ extension DashboardVC {
                             let currentDashboardObjPos = UserStore.shared.currentDashboardObjPos ?? 0
                             if let unwp_dashTitle = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
                                 let btnTitle = " " + unwp_dashTitle + " "
-                                self.vwDashboardHeader.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
+                                self.vwDashboardHeader?.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
                             }
                         }
                         self.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: nil)

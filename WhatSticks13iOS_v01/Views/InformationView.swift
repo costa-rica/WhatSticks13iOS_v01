@@ -147,13 +147,18 @@ extension InformationView{
             switch resultHasNewLastUpdateDate{
             case let .success(hasNewLastUpdateDate):
                 
-                print("dashbaord callSendDashboardTableObjects is success 🎉")
+                print("dashbaord callSendDashboardTableObjects is success")
                 if hasNewLastUpdateDate{
-                    print("Dashboard has new data 🚀 🚀 🚀")
+                    print("Dashboard has new data")
+                    print("[InformationView] UserStore.shared.arryDashboardTableObjects.count: \(UserStore.shared.arryDashboardTableObjects.count)")
                     DispatchQueue.main.async {
 
                         self.delegate?.templateAlert(alertTitle: "New data analyzed 📊📈", alertMessage: nil, completion: {
                         self.delegate?.setupUserHasDashboard()
+//                            self.delegate?.vwDashboardHeader
+                            if let firstObjDepVarName = UserStore.shared.arryDashboardTableObjects[0].dependentVarName{
+                                self.delegate?.vwDashboardHeader?.btnDashboardNamePicker.setTitle(firstObjDepVarName, for: .normal)
+                            }
                         })
                     }
                 } else {
@@ -174,6 +179,7 @@ protocol InformationViewDelegate: AnyObject {
     func update_arryDashboardTableObjects()
     func templateAlert(alertTitle:String?,alertMessage:String?,completion: (() ->Void)?)
     func setupUserHasDashboard()
+    var vwDashboardHeader: DashboardHeader? { get }
 }
 
 

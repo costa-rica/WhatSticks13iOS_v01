@@ -101,7 +101,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
                 let currentDashboardObjPos = UserStore.shared.currentDashboardObjPos ?? 0
                 if let unwp_dashTitle = UserStore.shared.arryDashboardTableObjects[currentDashboardObjPos].dependentVarName {
                     let btnTitle = " " + unwp_dashTitle + " "
-                    dash_vc.vwDashboardHeader.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
+                    dash_vc.vwDashboardHeader?.btnDashboardNamePicker.setTitle(btnTitle, for: .normal)
                 }
             } else {
                 print("- No dashboard set up")

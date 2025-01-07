@@ -29,7 +29,19 @@ class DashboardHeader: UIView {
         btnDashboardNamePicker.translatesAutoresizingMaskIntoConstraints=false
         btnDashboardNamePicker.backgroundColor = .systemBlue
         btnDashboardNamePicker.layer.cornerRadius = 10
+
+        print("UserStore.shared.arryDashboardTableObjects.count: \(UserStore.shared.arryDashboardTableObjects.count)")
+//        print("UserStore.shared.arryDashboardTableObjects[0].dependentVarName: \(UserStore.shared.arryDashboardTableObjects[0].dependentVarName)")
+        
         btnDashboardNamePicker.setTitle(" Dashboards ", for: .normal)
+        if UserStore.shared.arryDashboardTableObjects.count > 0{
+            print("🚀 🚀 🚀 UserStore.shared.arryDashboardTableObjects.count > 0{")
+            if let firstObjDepVarName = UserStore.shared.arryDashboardTableObjects[0].dependentVarName{
+                
+                print("🚀 🚀 🚀 There is a firstObjDepVarName")
+                btnDashboardNamePicker.setTitle(firstObjDepVarName, for: .normal)
+            }
+        }
         btnDashboardNamePicker.titleLabel?.numberOfLines = 0
         btnDashboardNamePicker.titleLabel?.lineBreakMode = .byWordWrapping
         
